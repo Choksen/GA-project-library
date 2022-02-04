@@ -24,12 +24,15 @@ public class Record extends Base {
     @JoinColumn(name = "book_id")
     private Book book;  // ???
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_receipt")
     private LocalDate dateReceipt;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_expected_return")
     private LocalDate dateExpectedReturn;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_valid_return")
     private LocalDate dateValidReturn;
 
