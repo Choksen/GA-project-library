@@ -22,7 +22,7 @@ public class Reader extends Person {
     @OneToMany
     private Set<Record> records;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(name="number_reader", nullable = false)
