@@ -12,6 +12,6 @@ import javax.persistence.MappedSuperclass;
 @Getter
 public abstract class Base {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 }

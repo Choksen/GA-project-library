@@ -5,11 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "reader")
@@ -19,8 +16,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class Reader extends Person {
 
-    @OneToMany
-    private Set<Record> records;
+    @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "reader_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> books;
 
     @Column(nullable = false, unique = true)
     private String email;

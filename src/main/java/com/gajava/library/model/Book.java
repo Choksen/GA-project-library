@@ -31,9 +31,6 @@ public class Book extends Base {
     @Column(name = "number_instances",nullable = false)
     private Integer countBooks;
 
-    @Column(name = "availability",nullable = false)
-    private Boolean isAvailability;
-
     @ManyToMany
     @JoinTable(name = "book_author",
     joinColumns = @JoinColumn(name = "book_id"),
