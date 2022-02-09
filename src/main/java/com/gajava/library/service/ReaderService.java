@@ -4,7 +4,7 @@ import com.gajava.library.model.Reader;
 import org.springframework.data.domain.Page;
 
 public interface ReaderService {
-    //name,lastname,email,phone
+
     Reader create(Reader reader);
 
     void updateBooksAndRating(Long id, Long idBook, Integer rating);

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import java.util.Set;
 
 public interface BookService {
-    // title,genre,year,description,number_instances
+
     Book create(Book book);
 
     void updateCountBooks(Long id, Integer returnedOrTaken);

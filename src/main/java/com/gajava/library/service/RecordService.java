@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import java.time.LocalDate;
 
 public interface RecordService {
-    // date_expected_return(maybe null in dto),book_id,reader_id
     Record create(Record record);
 
     Record updateDateValidReturnAndComment(Long readerId, Long bookId, String comment, LocalDate dateValidReturn);
