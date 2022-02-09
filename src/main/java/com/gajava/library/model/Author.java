@@ -12,12 +12,12 @@ import java.util.Set;
 @Table(name = "author")
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 public class Author extends Person {
-    @ManyToMany
+   /* @ManyToMany
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books;
+    private Set<Book> books;*/
 }

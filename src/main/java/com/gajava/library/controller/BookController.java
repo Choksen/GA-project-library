@@ -16,7 +16,7 @@ import javax.validation.Valid;
 public class BookController {
     final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(final BookService bookService) {
         this.bookService = bookService;
     }
 
