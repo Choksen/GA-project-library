@@ -33,6 +33,9 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Record create(final Record record) {
         final Book book = bookService.findById(record.getBook().getId());
+        if (book.getCountBooks()==0){
+            throw new IllegalArgumentException("no books available");
+        }
         bookService.updateCountBooks(book.getId(), -1);
 
         final Reader reader = readerService.findById(record.getReader().getId());
