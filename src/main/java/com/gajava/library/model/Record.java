@@ -17,17 +17,17 @@ import java.time.LocalDate;
 public class Record extends Base {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reader_id")
+    @JoinColumn(name = "reader_id", nullable = false)
     private Reader reader;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;  // ???
 
-    @Column(name = "date_receipt")
+    @Column(name = "date_receipt", nullable = false)
     private LocalDate dateReceipt;
 
-    @Column(name = "date_expected_return")
+    @Column(name = "date_expected_return", nullable = false)
     private LocalDate dateExpectedReturn;
 
     @Column(name = "date_valid_return")

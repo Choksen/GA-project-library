@@ -25,7 +25,7 @@ public class BookController {
         if(book == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        bookService.save(book);
+        bookService.create(book);
         return new ResponseEntity<>(book,HttpStatus.CREATED);
     }
 

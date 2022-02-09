@@ -15,6 +15,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Book findBookByTitle(String title);
 
-    Page<Book> findAllByCountBooksAfter(Integer countBook, Pageable pageable);
+    Page<Book> findAllByCountBooksGreaterThanEqual(Integer countBooks, Pageable pageable);
 
+    Page<Book> findAllByCountBooksEquals(Integer countBooks,Pageable pageable);
 }

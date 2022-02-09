@@ -25,7 +25,7 @@ public class AuthorController {
         if(author == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        authorService.save(author);
+        authorService.create(author);
         return new ResponseEntity<>(author,HttpStatus.CREATED);
     }
 }

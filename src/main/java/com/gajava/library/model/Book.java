@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
@@ -28,7 +29,8 @@ public class Book extends Base {
     @Column(nullable = false)
     private String description;
 
-    @Column(name = "number_instances",nullable = false)
+    @NotNull
+    @Column(name = "number_instances",nullable = false) //added min count = 0
     private Integer countBooks;
 
     @ManyToMany

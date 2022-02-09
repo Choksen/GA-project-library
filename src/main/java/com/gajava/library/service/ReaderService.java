@@ -2,10 +2,16 @@ package com.gajava.library.service;
 
 import com.gajava.library.model.Reader;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface ReaderService {
-    void save(Reader reader);
+    //name,lastname,email,phone
+    Reader create(Reader reader);
+
+    void updateBooksAndRating(Long id, Long idBook, Integer rating);
+
+    void updateBooksForAdd(Long id, Long idBook);
+
+    Reader findById(Long id);
 
     void delete(Long id);
 

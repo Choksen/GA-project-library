@@ -15,8 +15,14 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void save(final Author author) {
-        final Optional<Author> author1 = Optional.of(authorRepository.save(author));
+    public Author create(final Author author) {
+        final Optional<Author> authorCreated = Optional.of(authorRepository.save(author));
+        return authorCreated.orElseThrow();
+    }
+
+    @Override
+    public Author findById(final Long id) {
+        return authorRepository.findById(id).orElseThrow();
     }
 
     @Override
