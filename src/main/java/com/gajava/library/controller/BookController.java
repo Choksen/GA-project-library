@@ -7,7 +7,10 @@ import com.gajava.library.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -18,14 +21,11 @@ public class BookController {
     private final BookService bookService;
     private final BookMapper bookMapper;
 
-
-
     @PostMapping(value = "/save")
     public ResponseEntity<BookDto> saveBook(@RequestBody @Valid BookDto bookDto) {
         final Book book = bookMapper.fromDto(bookDto);
+        bookService.create(book);
         bookDto = bookMapper.toDto(bookService.create(book));
         return new ResponseEntity<>(bookDto, HttpStatus.CREATED);
     }
-
-
 }

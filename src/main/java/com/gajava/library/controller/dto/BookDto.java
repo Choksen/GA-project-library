@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,5 +23,8 @@ public class BookDto {
     private String description;
     @NotNull
     private Integer numberInstances;
+    @NotNull
+    @Valid
+    private Set<AuthorDto> authors;
 
 }

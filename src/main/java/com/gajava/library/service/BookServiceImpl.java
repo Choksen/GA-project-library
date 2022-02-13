@@ -8,20 +8,31 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final AuthorService authorService;
 
-    public BookServiceImpl(final BookRepository bookRepository) {
+    public BookServiceImpl(final BookRepository bookRepository,final AuthorService authorService) {
         this.bookRepository = bookRepository;
+        this.authorService = authorService;
     }
 
-
+    //TODO понять как тут реализовать транзакцию
+    //TODO manager service
+    @Transactional
     @Override
     public Book create(final Book book) {
+        final Set<Author> authors = new HashSet<>();
+        for(final Author author : book.getAuthors()){
+            authors.add(authorService.findOrCreate(author));
+        }
+        book.setAuthors(authors);
         final Optional<Book> bookCreated = Optional.of(bookRepository.save(book));
         return bookCreated.orElseThrow();
     }

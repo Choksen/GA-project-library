@@ -9,13 +9,13 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "author")
+@Table(name = "author",uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"first_name", "last_name"})})
 @Getter
 @Setter
 //@NoArgsConstructor
 @AllArgsConstructor
 public class Author extends Person {
-
    /* @ManyToMany
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "author_id"),

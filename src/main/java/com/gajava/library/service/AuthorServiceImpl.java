@@ -31,4 +31,15 @@ public class AuthorServiceImpl implements AuthorService {
             authorRepository.deleteById(id);
         }
     }
+
+    @Override
+    public Author findOrCreate(final Author author) {
+        Author authorWithId = authorRepository.findAuthorByFirstNameAndLastName(
+                author.getFirstName(),
+                author.getLastName());
+        if (authorWithId == null) {
+            authorWithId = authorRepository.save(author);
+        }
+        return authorWithId;
+    }
 }

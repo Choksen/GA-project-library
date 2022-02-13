@@ -1,6 +1,8 @@
 package com.gajava.library.controller;
 
 import com.gajava.library.controller.dto.AuthorDto;
+import com.gajava.library.mapper.AuthorMapper;
+import com.gajava.library.model.Author;
 import com.gajava.library.service.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,13 +16,12 @@ import javax.validation.Valid;
 @RequestMapping("/authors")
 public class AuthorController {
     private final AuthorService authorService;
-/*    private final AuthorMapper authorMapper;*/
+    private final AuthorMapper authorMapper;
 
-    @PostMapping
-    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody @Valid AuthorDto dto){
-/*        Author author = authorMapper.fromDto(dto);
-        AuthorCreateDto dto1 = authorMapper.toDto(author);*/
-//        authorService.create(author);
-        return new ResponseEntity<>(/*author*/ null,HttpStatus.CREATED);
+    @PostMapping(value = "/save")
+    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody @Valid AuthorDto authorDto){
+        final Author author = authorMapper.fromDto(authorDto);
+        authorDto = authorMapper.toDto(authorService.create(author));
+        return new ResponseEntity<>(authorDto,HttpStatus.CREATED);
     }
 }

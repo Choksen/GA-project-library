@@ -28,7 +28,7 @@ public class RecordServiceImpl implements RecordService {
         this.bookService = bookService;
     }
 
-
+    //TODO manager service
     @Transactional
     @Override
     public Record create(final Record record) {

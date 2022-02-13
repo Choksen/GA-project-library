@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Book extends Base {
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
