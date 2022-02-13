@@ -7,12 +7,9 @@ import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 
-public interface RecordService {
-    Record create(Record record);
+public interface RecordService extends CrudService<Record> {
 
     Record updateDateValidReturnAndComment(Long readerId, Long bookId, String comment, LocalDate dateValidReturn);
-
-    void delete(Long id);
 
     Page<Record> findAllByReader(Reader reader);
 

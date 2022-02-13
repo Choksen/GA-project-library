@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
-    final BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public BookServiceImpl(final BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -73,8 +73,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<Book> findBookByAuthor(final Set<Author> authorSet) {
-        final Pageable pageable = PageRequest.of(0, 5);
+        /*final Pageable pageable = PageRequest.of(0, 5);
         final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
-        return books.orElseThrow();
+        return books.orElseThrow();*/
+        return Page.empty();
     }
 }

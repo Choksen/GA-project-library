@@ -33,13 +33,13 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Record create(final Record record) {
         final Book book = bookService.findById(record.getBook().getId());
-        if (book.getCountBooks()==0){
+        if (book.getCountBooks() == 0) {
             throw new IllegalArgumentException("no books available");
         }
         bookService.updateCountBooks(book.getId(), -1);
 
         final Reader reader = readerService.findById(record.getReader().getId());
-        if (reader.getRating() < 20){
+        if (reader.getRating() < 20) {
             throw new IllegalArgumentException("So low rating");
         }
         readerService.updateBooksForAdd(reader.getId(), record.getBook().getId());
@@ -51,6 +51,11 @@ public class RecordServiceImpl implements RecordService {
         final Optional<Record> record1 = Optional.of(recordRepository.save(record));
 
         return record1.orElseThrow();
+    }
+
+    @Override
+    public Record findById(final Long id) {
+        return recordRepository.findById(id).orElseThrow();
     }
 
     @Transactional

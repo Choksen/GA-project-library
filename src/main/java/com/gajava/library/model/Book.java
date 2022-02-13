@@ -17,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Book extends Base {
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String title;
 
     @Column(nullable = false)

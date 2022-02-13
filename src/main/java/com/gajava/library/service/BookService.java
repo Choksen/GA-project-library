@@ -6,15 +6,9 @@ import org.springframework.data.domain.Page;
 
 import java.util.Set;
 
-public interface BookService {
-
-    Book create(Book book);
+public interface BookService extends CrudService<Book> {
 
     void updateCountBooks(Long id, Integer returnedOrTaken);
-
-    Book findById(Long id);
-
-    void delete(Long id);
 
     Page<Book> findBooksByGenre(String genre);
 

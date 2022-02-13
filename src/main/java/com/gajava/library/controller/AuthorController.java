@@ -1,31 +1,26 @@
 package com.gajava.library.controller;
 
-import com.gajava.library.model.Author;
+import com.gajava.library.controller.dto.AuthorDto;
 import com.gajava.library.service.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/authors")
 public class AuthorController {
     private final AuthorService authorService;
+/*    private final AuthorMapper authorMapper;*/
 
-    public AuthorController(final AuthorService authorService) {
-        this.authorService = authorService;
-    }
-
-    @RequestMapping(value = "",method = RequestMethod.POST)
-    public ResponseEntity<Author> saveAuthor(@RequestBody @Valid Author author){
-        if(author == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        authorService.create(author);
-        return new ResponseEntity<>(author,HttpStatus.CREATED);
+    @PostMapping
+    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody @Valid AuthorDto dto){
+/*        Author author = authorMapper.fromDto(dto);
+        AuthorCreateDto dto1 = authorMapper.toDto(author);*/
+//        authorService.create(author);
+        return new ResponseEntity<>(/*author*/ null,HttpStatus.CREATED);
     }
 }
