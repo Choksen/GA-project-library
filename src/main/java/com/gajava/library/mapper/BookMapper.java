@@ -6,8 +6,10 @@ import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
@@ -17,6 +19,10 @@ public interface BookMapper extends BaseMapping<BookDto,Book> {
 
     @Mapping(target = "countBooks",source = "dto.numberInstances")
     Book fromDto(BookDto dto);
+
+    List<BookDto> toDto(Page<Book> books);
+
+ //   Page<Book> fromDto(Page<BookDto> booksDto);
 
     default Set<Author> authorsToAuthorsDto(Set<AuthorDto> authorsDto){
         final Set<Author> authors = new HashSet<>();

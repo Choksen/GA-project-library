@@ -2,6 +2,8 @@ package com.gajava.library.service;
 
 import com.gajava.library.model.Author;
 import com.gajava.library.repository.AuthorRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,11 +27,18 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findById(id).orElseThrow();
     }
 
+    //TODO exception if null
     @Override
     public void delete(final Long id) {
         if (id != null) {
             authorRepository.deleteById(id);
         }
+    }
+
+    //TODO added exception
+    @Override
+    public Page<Author> findAll(final Pageable pageable) {
+        return authorRepository.findAll(pageable);
     }
 
     @Override
@@ -42,4 +51,6 @@ public class AuthorServiceImpl implements AuthorService {
         }
         return authorWithId;
     }
+
+
 }

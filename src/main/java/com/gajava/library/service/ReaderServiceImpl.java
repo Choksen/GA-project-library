@@ -59,6 +59,12 @@ public class ReaderServiceImpl implements ReaderService {
         }
     }
 
+    //TODO add exception
+    @Override
+    public Page<Reader> findAll(final Pageable pageable) {
+        return readerRepository.findAll(pageable);
+    }
+
     @Override
     public Page<Reader> getAll() {
         final Pageable pageable = PageRequest.of(0, 5);

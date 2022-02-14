@@ -57,22 +57,26 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    //TODO exception
     @Override
-    public Page<Book> findBooksByGenre(final String genre) {
-        final Pageable pageable = PageRequest.of(0, 5);
+    public Page<Book> findAll(final Pageable pageable) {
+        return bookRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Book> findBooksByGenre(final String genre,final Pageable pageable) {
         final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByGenre(genre, pageable));
         return books.orElseThrow();
     }
 
     @Override
-    public Book findBookByTitle(final String title) {
-        final Optional<Book> books = Optional.of(bookRepository.findBookByTitle(title));
+    public Page<Book> findBooksByTitle(final String title,final Pageable pageable) {
+        final Optional<Page<Book>> books = Optional.of(bookRepository.findBooksByTitle(title,pageable));
         return books.orElseThrow();
     }
 
     @Override
-    public Page<Book> findBooksByAvailability(final Integer count) {
-        final Pageable pageable = PageRequest.of(0, 5);
+    public Page<Book> findBooksByAvailability(final Integer count,final Pageable pageable) {
         final Optional<Page<Book>> books;
         if (count == 0) {
             books = Optional.of(bookRepository.findAllByCountBooksEquals(count, pageable));
@@ -83,10 +87,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findBookByAuthor(final Set<Author> authorSet) {
-        /*final Pageable pageable = PageRequest.of(0, 5);
-        final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
-        return books.orElseThrow();*/
+    public Page<Book> findBookByAuthor(final Set<Author> authorSet,final Pageable pageable) {
+      //  final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
         return Page.empty();
     }
 }

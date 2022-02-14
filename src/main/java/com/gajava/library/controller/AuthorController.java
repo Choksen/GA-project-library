@@ -24,4 +24,16 @@ public class AuthorController {
         authorDto = authorMapper.toDto(authorService.create(author));
         return new ResponseEntity<>(authorDto,HttpStatus.CREATED);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<AuthorDto> findById(@PathVariable Long id){
+        final AuthorDto authorDto = authorMapper.toDto(authorService.findById(id));
+        return new ResponseEntity<>(authorDto,HttpStatus.OK);
+    }
+
+    //TODO massage delete complete
+    @DeleteMapping(value = "/{id}/delete")
+    public void deleteAuthor(@PathVariable Long id){
+        authorService.delete(id);
+    }
 }

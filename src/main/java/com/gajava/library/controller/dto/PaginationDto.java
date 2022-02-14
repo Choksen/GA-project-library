@@ -1,18 +1,19 @@
 package com.gajava.library.controller.dto;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter
-public class Pagination {
+@RequiredArgsConstructor
+public class PaginationDto {
     @NotNull
     private Integer pageNumber;
     @NotNull
     private Integer size;
-    private List<Sort> sort;
+    private SortDto sortDto;
 
 }

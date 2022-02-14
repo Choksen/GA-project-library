@@ -9,11 +9,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Set;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
+    //TODO create working method
  //   Page<Book> findAllByAuthors(Set<Author> authors, Pageable pageable);
 
     Page<Book> findAllByGenre(String genre, Pageable pageable);
 
-    Book findBookByTitle(String title);
+    Page<Book> findBooksByTitle(String title,Pageable pageable);
 
     Page<Book> findAllByCountBooksGreaterThanEqual(Integer countBooks, Pageable pageable);
 

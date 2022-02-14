@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort.Direction;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Sort {
-    private final String property;
-    private final Direction direction;
+public class SortDto {
+    private String property;
+    private Direction direction;
 }

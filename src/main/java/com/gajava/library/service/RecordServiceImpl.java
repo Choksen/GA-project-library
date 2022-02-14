@@ -88,6 +88,11 @@ public class RecordServiceImpl implements RecordService {
             recordRepository.deleteById(id);
         }
     }
+    //TODO added exception
+    @Override
+    public Page<Record> findAll(final Pageable pageable) {
+        return recordRepository.findAll(pageable);
+    }
 
     @Override
     public Page<Record> findAllByReader(final Reader reader) {
