@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"com.gajava.library"},{"l":"com.gajava.library.controller"},{"l":"com.gajava.library.controller.dto"},{"l":"com.gajava.library.mapper"},{"l":"com.gajava.library.model"},{"l":"com.gajava.library.repository"},{"l":"com.gajava.library.service"}]
