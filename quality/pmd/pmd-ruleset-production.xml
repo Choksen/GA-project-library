@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="WPS production ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>WPS ruleset for production code</description>
+
+    <!--Used Rulesets-->
+
+    <rule ref="rulesets/java/basic.xml"/>
+    <rule ref="rulesets/java/braces.xml"/>
+    <rule ref="rulesets/java/clone.xml"/>
+    <rule ref="rulesets/java/codesize.xml"/>
+    <rule ref="rulesets/java/comments.xml">
+        <!--Removed to avoid warnings, e.g. when the JavaDoc is available at the interface of a class-->
+        <exclude name="CommentRequired"/>
+    </rule>
+    <rule ref="rulesets/java/controversial.xml">
+        <!--Removed to avoid warning on package private classes-->
+        <exclude name="DefaultPackage"/>
+        <!--Allow classes without constructor-->
+        <exclude name="AtLeastOneConstructor"/>
+        <!--Avoid ConcurrentHashMap hint, since it's not going away when using one-->
+        <exclude name="UseConcurrentHashMap"/>
+        <!--Allow Equals and HashCode generation-->
+        <exclude name="OnlyOneReturn"/>
+        <!--Removed because it's just senseless-->
+        <exclude name="AvoidFinalLocalVariable"/>
+        <!--Removed because it's just senseless-->
+        <exclude name="DataflowAnomalyAnalysis"/>
+    </rule>
+    <rule ref="rulesets/java/coupling.xml">
+        <!--Removed to allow method chaining, e.g. for Java 8-->
+        <exclude name="LawOfDemeter"/>
+        <!--Configure on project specific if needed-->
+        <exclude name="LoosePackageCoupling"/>
+    </rule>
+    <rule ref="rulesets/java/design.xml">
+        <!--Removed to allow annotations on fields-->
+        <exclude name="FieldDeclarationsShouldBeAtStartOfClass"/>
+        <!--Removed to allow abstract classes without abstract methods-->
+        <exclude name="AbstractClassWithoutAbstractMethod"/>
+    </rule>
+    <rule ref="rulesets/java/empty.xml"/>
+    <rule ref="rulesets/java/finalizers.xml"/>
+    <rule ref="rulesets/java/imports.xml">
+        <!--Removed to allow unlimited static imports-->
+        <exclude name="TooManyStaticImports"/>
+    </rule>
+    <!--Added rule from javabeans to force version UID field-->
+    <rule ref="rulesets/java/javabeans.xml/MissingSerialVersionUID"/>
+    <rule ref="rulesets/java/logging-java.xml"/>
+    <rule ref="rulesets/java/migrating.xml"/>
+    <rule ref="rulesets/java/naming.xml">
+        <!--Removed to have the freedom to choose long names-->
+        <exclude name="ShortVariable"/>
+        <!--Removed to have the freedom to choose short names, e.g. id for JPA entities-->
+        <exclude name="LongVariable"/>
+        <!--Removed to avoid warning for two letter Generics-->
+        <exclude name="GenericsNaming"/>
+    </rule>
+    <rule ref="rulesets/java/optimizations.xml"/>
+    <rule ref="rulesets/java/strictexception.xml">
+        <!--Removed to avoid warnings when using frameworks like Spring-->
+        <exclude name="SignatureDeclareThrowsException"/>
+    </rule>
+    <rule ref="rulesets/java/strings.xml">
+        <exclude name="AvoidDuplicateLiterals"/>
+    </rule>
+    <rule ref="rulesets/java/sunsecure.xml"/>
+    <rule ref="rulesets/java/typeresolution.xml">
+        <!--Removed to avoid warnings when using frameworks like Spring-->
+        <exclude name="SignatureDeclareThrowsException"/>
+    </rule>
+    <rule ref="rulesets/java/unnecessary.xml"/>
+    <rule ref="rulesets/java/unusedcode.xml"/>
+    <!-- Optional, use if needed -->
+    <!-- <rule ref="rulesets/java/j2ee.xml" /> -->
+    <!--<rule ref="rulesets/java/javabeans.xml"/>-->
+    <!-- <rule ref="rulesets/java/logging-jakarta-commons.xml" /> -->
+
+    <!--Customized Rules-->
+
+    <rule ref="rulesets/java/comments.xml/CommentSize">
+        <properties>
+            <property name="maxLineLength" value="140"/>
+            <property name="maxLines" value="20"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/TooManyMethods">
+        <properties>
+            <property name="maxmethods" value="20"/>
+        </properties>
+    </rule>
+
+</ruleset>

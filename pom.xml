@@ -68,11 +68,13 @@
 
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -92,6 +94,83 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>3.16.0</version>
+				<configuration>
+					<rulesets>
+						<ruleset>../quality/pmd/pmd-ruleset-production.xml</ruleset>
+					</rulesets>
+					<outputDirectory>${project.build.directory}/reports/pmd</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>pmd</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.4</version>
+				<executions>
+					<execution>
+						<id>findbugs</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<excludeFilterFile>quality/findbugs/exclude-filter.xml</excludeFilterFile>
+							<findbugsXmlOutputDirectory>${project.build.directory}/reports/findbugs
+							</findbugsXmlOutputDirectory>
+							<failOnError>true</failOnError>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.17</version>
+				<executions>
+					<execution>
+						<id>checkstyle</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+						<configuration>
+							<configLocation>/quality/checkstyle/checkstyle-production.xml</configLocation>
+							<outputFile>${project.build.directory}/reports/checkstyle/checkstyle-result.xml
+							</outputFile>
+							<failsOnError>false</failsOnError>
+						</configuration>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+						<configuration>
+							<configLocation>/quality/checkstyle/checkstyle-production.xml</configLocation>
+							<outputFile>${project.build.directory}/reports/checkstyle/checkstyle-result.xml
+							</outputFile>
+							<failsOnError>true</failsOnError>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

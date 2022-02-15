@@ -25,6 +25,9 @@ public interface BookMapper extends BaseMapping<BookDto, Book> {
     //   Page<Book> fromDto(Page<BookDto> booksDto);
 
     default Set<Author> authorsToAuthorsDto(Set<AuthorDto> authorsDto) {
+        if (authorsDto == null) {
+            return null;
+        }
         final Set<Author> authors = new HashSet<>();
         for (final AuthorDto authorDto : authorsDto) {
             final Author author = new Author();
