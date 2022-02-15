@@ -8,10 +8,7 @@ import com.gajava.library.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,12 +20,22 @@ public class RecordController {
     private final RecordMapper recordMapper;
 //    private final PaginationMapper paginationMapper;
 
-    //TODO может быть заменить дефолт в рекордМаппинг и в дто поменять приходит бук дто и рекод дто сокрощенные, которые хранят в себе только айди?
-    // Доделать обратный маппинг, потому что поля бук и ридер не заполняются, но сохраняются
     @PostMapping(value = "/save")
-    public ResponseEntity<ResponseRecordDto> save(@RequestBody @Valid RequestRecordDto requestRecordDto){
+    public ResponseEntity<ResponseRecordDto> save(@RequestBody @Valid RequestRecordDto requestRecordDto) {
         final Record record = recordMapper.fromDto(requestRecordDto);
         recordService.create(record);
         return new ResponseEntity<>(recordMapper.toDto(record), HttpStatus.CREATED);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ResponseRecordDto> findById(@PathVariable Long id){
+        return new ResponseEntity<>(recordMapper.toDto(recordService.findById(id)),HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}/delete")
+    public void delete(@PathVariable Long id){
+        recordService.delete(id);
+    }
+
+
 }

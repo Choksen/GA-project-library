@@ -17,6 +17,7 @@ public interface PaginationMapper {
     })
     PaginationDto toDto(Pageable pageable);
 
+    //TODO default sort
     default Sort sortToSortDto(SortDto sortDto) {
         return Sort.by(sortDto.getDirection(), sortDto.getProperty());
     }

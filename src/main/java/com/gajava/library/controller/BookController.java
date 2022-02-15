@@ -44,6 +44,7 @@ public class BookController {
     }
 
     //TODO findByYear?
+    //TODO переделать в сервисы Manager
     @GetMapping(value = "")
     public ResponseEntity<List<BookDto>> findBySomething(@RequestBody @Valid FindBookByDto findBookByDto) {
         final Page<Book> books;

@@ -6,11 +6,13 @@ import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.model.Record;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface RecordMapper {
 
-    default Record fromDto(RequestRecordDto recordDto){
+    default Record fromDto(RequestRecordDto recordDto) {
         final Book book = new Book();
         book.setId(recordDto.getBookId());
         final Reader reader = new Reader();
@@ -21,9 +23,10 @@ public interface RecordMapper {
         return record;
     }
 
-
+    @Mappings({
+            @Mapping(target = "bookId", expression = "java(record.getBook().getId())"),
+            @Mapping(target = "readerId", expression = "java(record.getReader().getId())")
+    })
     ResponseRecordDto toDto(Record record);
-/*    default Long BookIdToBook(Book book){
-        return book.getId();
-    }*/
+
 }
