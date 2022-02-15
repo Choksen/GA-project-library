@@ -19,21 +19,21 @@ public class AuthorController {
     private final AuthorMapper authorMapper;
 
     @PostMapping(value = "/save")
-    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody @Valid AuthorDto authorDto){
+    public ResponseEntity<AuthorDto> saveAuthor(@RequestBody @Valid AuthorDto authorDto) {
         final Author author = authorMapper.fromDto(authorDto);
         authorDto = authorMapper.toDto(authorService.create(author));
-        return new ResponseEntity<>(authorDto,HttpStatus.CREATED);
+        return new ResponseEntity<>(authorDto, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AuthorDto> findById(@PathVariable Long id){
+    public ResponseEntity<AuthorDto> findById(@PathVariable Long id) {
         final AuthorDto authorDto = authorMapper.toDto(authorService.findById(id));
-        return new ResponseEntity<>(authorDto,HttpStatus.OK);
+        return new ResponseEntity<>(authorDto, HttpStatus.OK);
     }
 
     //TODO massage delete complete
     @DeleteMapping(value = "/{id}/delete")
-    public void deleteAuthor(@PathVariable Long id){
+    public void deleteAuthor(@PathVariable Long id) {
         authorService.delete(id);
     }
 }

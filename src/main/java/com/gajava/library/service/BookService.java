@@ -13,10 +13,10 @@ public interface BookService extends CrudService<Book> {
 
     Page<Book> findBooksByGenre(String genre, Pageable pageable);
 
-    Page<Book> findBooksByTitle(String title,Pageable pageable);
+    Page<Book> findBooksByTitle(String title, Pageable pageable);
 
-    Page<Book> findBooksByAvailability(Integer count,Pageable pageable);
+    Page<Book> findBooksByAvailability(Integer count, Pageable pageable);
 
-    Page<Book> findBookByAuthor(Set<Author> authorSet,Pageable pageable);
+    Page<Book> findBookByAuthor(Set<Author> authorSet, Pageable pageable);
 
 }

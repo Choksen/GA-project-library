@@ -10,8 +10,9 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 @Getter
+@Setter
 public abstract class Base {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    protected Long id;
 }

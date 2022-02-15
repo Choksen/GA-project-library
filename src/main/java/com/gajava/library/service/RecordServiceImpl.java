@@ -42,7 +42,7 @@ public class RecordServiceImpl implements RecordService {
         if (reader.getRating() < 20) {
             throw new IllegalArgumentException("So low rating");
         }
-        readerService.updateBooksForAdd(reader.getId(), record.getBook().getId());
+        readerService.updateBooksForAdd(reader.getId(),book);
 
         record.setDateReceipt(LocalDate.now());
         if (record.getDateExpectedReturn() == null) {
@@ -67,7 +67,8 @@ public class RecordServiceImpl implements RecordService {
 
         final Reader reader = readerService.findById(readerId);
 
-        final Record record = recordRepository.findRecordByReaderIdAndBookId(readerId, bookId);
+        //TODO exception если не найдет такую запись
+        final Record record = Optional.of(recordRepository.findRecordByReaderIdAndBookId(readerId, bookId)).orElseThrow();
         record.setDateValidReturn(LocalDate.now());
         record.setComment(comment);
 
@@ -88,6 +89,7 @@ public class RecordServiceImpl implements RecordService {
             recordRepository.deleteById(id);
         }
     }
+
     //TODO added exception
     @Override
     public Page<Record> findAll(final Pageable pageable) {

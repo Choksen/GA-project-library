@@ -1,9 +1,7 @@
 package com.gajava.library.mapper;
 
 import org.mapstruct.InheritConfiguration;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.MapperConfig;
-import org.mapstruct.Mapping;
 
 import java.util.Set;
 import java.util.stream.Stream;
@@ -28,7 +26,7 @@ public interface BaseMapping<SOURCE, TARGET> {
      */
     Set<TARGET> sourceToTarget(Stream<SOURCE> stream);
 
-/*    *//**
+    /*    *//**
      * Реверс, сопоставление атрибутов с тем же именем, форма потока сбора
      *//*
     Set<SOURCE> targetToSource(Stream<TARGET> stream);*/

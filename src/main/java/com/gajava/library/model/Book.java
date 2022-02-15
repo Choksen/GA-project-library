@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -31,12 +30,12 @@ public class Book extends Base {
     private String description;
 
     @NotNull
-    @Column(name = "number_instances",nullable = false) //added min count = 0
+    @Column(name = "number_instances", nullable = false) //added min count = 0
     private Integer countBooks;
 
     @ManyToMany
     @JoinTable(name = "book_author",
-    joinColumns = @JoinColumn(name = "book_id"),
-    inverseJoinColumns = @JoinColumn(name = "author_id"))
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors;
 }

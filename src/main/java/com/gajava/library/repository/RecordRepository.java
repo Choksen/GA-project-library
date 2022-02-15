@@ -17,6 +17,6 @@ public interface RecordRepository extends JpaRepository<Record, Long> {
 
     Page<Record> findAllByDateValidReturnIsNotNull(Pageable pageable);
 
-    Record findRecordByReaderIdAndBookId(Long readerId,Long bookId);
+    Record findRecordByReaderIdAndBookId(Long readerId, Long bookId);
 
 }

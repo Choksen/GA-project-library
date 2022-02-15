@@ -28,6 +28,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     //TODO exception if null
+    //TODO нельзя удалить автора без удаления его связей с книгами
     @Override
     public void delete(final Long id) {
         if (id != null) {

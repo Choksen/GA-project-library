@@ -22,7 +22,7 @@ public class Record extends Base {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
-    private Book book;  // ???
+    private Book book;
 
     @Column(name = "date_receipt", nullable = false)
     private LocalDate dateReceipt;

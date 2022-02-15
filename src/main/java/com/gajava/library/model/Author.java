@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "author",uniqueConstraints = {
+@Table(name = "author", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"first_name", "last_name"})})
 @Getter
 @Setter

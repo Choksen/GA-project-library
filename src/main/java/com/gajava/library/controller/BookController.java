@@ -1,7 +1,7 @@
 package com.gajava.library.controller;
 
 import com.gajava.library.controller.dto.BookDto;
-import com.gajava.library.controller.dto.FindBookByDto;
+import com.gajava.library.controller.dto.request.FindBookByDto;
 import com.gajava.library.mapper.BookMapper;
 import com.gajava.library.mapper.PaginationMapper;
 import com.gajava.library.model.Book;
@@ -23,7 +23,6 @@ public class BookController {
     private final BookMapper bookMapper;
     private final PaginationMapper paginationMapper;
 
-    //TODO findByYear?
 
     @PostMapping(value = "/save")
     public ResponseEntity<BookDto> saveBook(@RequestBody @Valid BookDto bookDto) {
@@ -44,27 +43,28 @@ public class BookController {
         bookService.delete(id);
     }
 
+    //TODO findByYear?
     @GetMapping(value = "")
     public ResponseEntity<List<BookDto>> findBySomething(@RequestBody @Valid FindBookByDto findBookByDto) {
         final Page<Book> books;
         if (findBookByDto.getGenre() != null) {
             books = bookService.findBooksByGenre(
                     findBookByDto.getGenre(),
-                    paginationMapper.fromDto(findBookByDto.getPaginationDto()));
+                    paginationMapper.fromDto(findBookByDto.getPagination()));
         } else if (findBookByDto.getTitle() != null) {
             books = bookService.findBooksByTitle(
                     findBookByDto.getTitle(),
-                    paginationMapper.fromDto(findBookByDto.getPaginationDto()));
+                    paginationMapper.fromDto(findBookByDto.getPagination()));
         } else if (findBookByDto.getCountBook() != null) {
             books = bookService.findBooksByAvailability(
                     findBookByDto.getCountBook(),
-                    paginationMapper.fromDto(findBookByDto.getPaginationDto()));
+                    paginationMapper.fromDto(findBookByDto.getPagination()));
         } else if (findBookByDto.getAuthors() != null) {
             books = bookService.findBookByAuthor(
                     bookMapper.authorsToAuthorsDto(findBookByDto.getAuthors()),
-                    paginationMapper.fromDto(findBookByDto.getPaginationDto()));
+                    paginationMapper.fromDto(findBookByDto.getPagination()));
         } else {
-            books = bookService.findAll(paginationMapper.fromDto(findBookByDto.getPaginationDto()));
+            books = bookService.findAll(paginationMapper.fromDto(findBookByDto.getPagination()));
         }
  //       final Integer countPages = books.getTotalPages(); Надо ли?
         final List<BookDto> booksDto = bookMapper.toDto(books);

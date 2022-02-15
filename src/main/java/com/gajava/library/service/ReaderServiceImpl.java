@@ -4,9 +4,7 @@ import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.repository.ReaderRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,11 +37,10 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public void updateBooksForAdd(final Long id, final Long idBook) {
+    public void updateBooksForAdd(final Long id, final Book book) {
         final Reader reader = readerRepository.findById(id).orElseThrow();
         final List<Book> books = reader.getBooks();
-        final Book bookForDelete = books.stream().filter(book -> book.getId().equals(idBook)).findFirst().orElseThrow();
-        books.add(bookForDelete);
+        books.add(book);
         readerRepository.save(reader);
     }
 
@@ -64,20 +61,5 @@ public class ReaderServiceImpl implements ReaderService {
     public Page<Reader> findAll(final Pageable pageable) {
         return readerRepository.findAll(pageable);
     }
-
-    @Override
-    public Page<Reader> getAll() {
-        final Pageable pageable = PageRequest.of(0, 5);
-        final Optional<Page<Reader>> readers = Optional.of(readerRepository.findAll(pageable));
-        return readers.orElseThrow();
-    }
-
-    @Override
-    public Page<Reader> getAllSortedByRating() {
-        final Pageable pageable = PageRequest.of(0, 5, Sort.by("rating").descending());
-        final Optional<Page<Reader>> readers = Optional.of(readerRepository.findAll(pageable));
-        return readers.orElseThrow();
-    }
-
 
 }

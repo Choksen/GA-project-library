@@ -1,5 +1,7 @@
-package com.gajava.library.controller.dto;
+package com.gajava.library.controller.dto.request;
 
+import com.gajava.library.controller.dto.AuthorDto;
+import com.gajava.library.controller.dto.pagination.PaginationDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,5 +18,5 @@ public class FindBookByDto {
     private Set<AuthorDto> authors;
     @NotNull
     @Valid
-    private PaginationDto paginationDto;
+    private PaginationDto pagination;
 }

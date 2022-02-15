@@ -1,4 +1,4 @@
-package com.gajava.library.controller.dto;
+package com.gajava.library.controller.dto.pagination;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

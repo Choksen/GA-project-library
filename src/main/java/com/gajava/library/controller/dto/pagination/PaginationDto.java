@@ -1,4 +1,4 @@
-package com.gajava.library.controller.dto;
+package com.gajava.library.controller.dto.pagination;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ public class PaginationDto {
     private Integer pageNumber;
     @NotNull
     private Integer size;
-    private SortDto sortDto;
+
+    private SortDto sort;
 
 }

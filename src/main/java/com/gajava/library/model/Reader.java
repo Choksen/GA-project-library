@@ -26,7 +26,7 @@ public class Reader extends Person {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name="number_reader", nullable = false)
+    @Column(name = "number_reader", nullable = false, unique = true)
     private Long numberReader;
 
     @Column(nullable = false)

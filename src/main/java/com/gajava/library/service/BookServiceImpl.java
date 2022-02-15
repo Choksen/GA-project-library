@@ -4,7 +4,6 @@ import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import com.gajava.library.repository.BookRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
 
-    public BookServiceImpl(final BookRepository bookRepository,final AuthorService authorService) {
+    public BookServiceImpl(final BookRepository bookRepository, final AuthorService authorService) {
         this.bookRepository = bookRepository;
         this.authorService = authorService;
     }
@@ -29,7 +28,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book create(final Book book) {
         final Set<Author> authors = new HashSet<>();
-        for(final Author author : book.getAuthors()){
+        for (final Author author : book.getAuthors()) {
             authors.add(authorService.findOrCreate(author));
         }
         book.setAuthors(authors);
@@ -64,19 +63,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findBooksByGenre(final String genre,final Pageable pageable) {
+    public Page<Book> findBooksByGenre(final String genre, final Pageable pageable) {
         final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByGenre(genre, pageable));
         return books.orElseThrow();
     }
 
     @Override
-    public Page<Book> findBooksByTitle(final String title,final Pageable pageable) {
-        final Optional<Page<Book>> books = Optional.of(bookRepository.findBooksByTitle(title,pageable));
+    public Page<Book> findBooksByTitle(final String title, final Pageable pageable) {
+        final Optional<Page<Book>> books = Optional.of(bookRepository.findBooksByTitle(title, pageable));
         return books.orElseThrow();
     }
 
     @Override
-    public Page<Book> findBooksByAvailability(final Integer count,final Pageable pageable) {
+    public Page<Book> findBooksByAvailability(final Integer count, final Pageable pageable) {
         final Optional<Page<Book>> books;
         if (count == 0) {
             books = Optional.of(bookRepository.findAllByCountBooksEquals(count, pageable));
@@ -87,8 +86,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findBookByAuthor(final Set<Author> authorSet,final Pageable pageable) {
-      //  final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
+    public Page<Book> findBookByAuthor(final Set<Author> authorSet, final Pageable pageable) {
+        //  final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
         return Page.empty();
     }
 }
