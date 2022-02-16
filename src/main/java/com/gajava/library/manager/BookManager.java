@@ -8,10 +8,5 @@ import org.springframework.data.domain.Pageable;
 import java.util.Set;
 
 public interface BookManager {
-    Page<Book> findBooksBySomething(String title,
-                                    String genre,
-                                    Integer countBook,
-                                    Set<Author> authors,
-                                    Pageable pageable);
-
+    Page<Book> findBooksBySomething(Book bookParams,Pageable pageable);
 }

@@ -27,7 +27,7 @@ public class RecordManagerImpl implements RecordManager {
     @Override
     public Record create(final Record record) {
         final Book book = bookService.findById(record.getBook().getId());
-        if (book.getCountBooks() == 0) {
+        if (book.getCountBook() == 0) {
             throw new IllegalArgumentException("no books available");
         }
         bookService.updateCountBooks(book.getId(), -1);
@@ -49,17 +49,17 @@ public class RecordManagerImpl implements RecordManager {
 
     @Transactional
     @Override
-    public Record updateDateValidReturnAndComment(final Long readerId, final Long bookId,
-                                                  final String comment, final LocalDate dateValidReturn) {
-        final Book book = bookService.findById(bookId);
+    public Record updateDateValidReturnAndComment(final Record recordParams) {
+        final Book book = bookService.findById(recordParams.getBook().getId());
         bookService.updateCountBooks(book.getId(), 1);
 
-        final Reader reader = readerService.findById(readerId);
+        final Reader reader = readerService.findById(recordParams.getReader().getId());
 
         //TODO exception если не найдет такую запись
-        final Record record = Optional.of(recordService.findRecordByReaderIdAndBookId(readerId, bookId)).orElseThrow();
+        final Record record = Optional.of(
+                recordService.findRecordByReaderIdAndBookId(reader.getId(), book.getId())).orElseThrow();
         record.setDateValidReturn(LocalDate.now());
-        record.setComment(comment);
+        record.setComment(recordParams.getComment());
 
         final long days = ChronoUnit.DAYS.between(
                 record.getDateExpectedReturn(),
@@ -73,17 +73,16 @@ public class RecordManagerImpl implements RecordManager {
     }
 
     @Override
-    public Page<Record> findBySomething(final Reader reader, final Book book,
-                                        final LocalDate dateValidReturn, final Pageable pageable) {
+    public Page<Record> findBySomething(final Record record, final Pageable pageable) {
         final Page<Record> records;
-        if(reader != null){
-            records = recordService.findAllByReader(reader,pageable);
-        } else if(book != null){
-            records = recordService.findAllByBook(book,pageable);
-        } else if(dateValidReturn != null){ //TODO поменять логику обработки на руках или нет, тк работает криво
-            records = recordService.findAllByDateValidReturnIsNotNull(pageable);
+        if(record.getReader() != null){
+            records = recordService.findAllByReader(record.getReader(),pageable);
+        } else if(record.getBook() != null){
+            records = recordService.findAllByBook(record.getBook(),pageable);
+        } else if(record.getComment() != null){ //TODO поменять логику обработки на руках или нет, тк работает криво
+            records = recordService.findAllByDateValidReturnIsNotNull(pageable); //возвращена
         } else {
-            records = recordService.findAllByDateValidReturnIsNull(pageable);
+            records = recordService.findAllByDateValidReturnIsNull(pageable); //на руках
         }
         return records;
     }

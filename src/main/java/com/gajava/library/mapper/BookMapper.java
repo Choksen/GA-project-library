@@ -2,6 +2,7 @@ package com.gajava.library.mapper;
 
 import com.gajava.library.controller.dto.AuthorDto;
 import com.gajava.library.controller.dto.BookDto;
+import com.gajava.library.controller.dto.request.FindBookByDto;
 import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import org.mapstruct.Mapper;
@@ -14,15 +15,15 @@ import java.util.Set;
 
 @Mapper(componentModel = "spring")
 public interface BookMapper extends BaseMapping<BookDto, Book> {
-    @Mapping(target = "numberInstances", source = "book.countBooks")
+    @Mapping(target = "numberInstances", source = "book.countBook")
     BookDto toDto(Book book);
 
-    @Mapping(target = "countBooks", source = "dto.numberInstances")
+    @Mapping(target = "countBook", source = "dto.numberInstances")
     Book fromDto(BookDto dto);
 
     List<BookDto> toDto(Page<Book> books);
 
-    //   Page<Book> fromDto(Page<BookDto> booksDto);
+    Book fromDto(FindBookByDto findBookByDto);
 
     default Set<Author> authorsToAuthorsDto(Set<AuthorDto> authorsDto) {
         if (authorsDto == null) {

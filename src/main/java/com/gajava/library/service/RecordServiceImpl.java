@@ -6,7 +6,6 @@ import com.gajava.library.model.Record;
 import com.gajava.library.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Page<Record> findAllByDateValidReturnIsNull(final Pageable pageable) {
-        final Optional<Page<Record>> records = Optional.of(recordRepository.findAllByDateValidReturnIsNotNull(pageable));
+        final Optional<Page<Record>> records = Optional.of(recordRepository.findAllByDateValidReturnIsNull(pageable));
         return records.orElseThrow();
     }
 
@@ -68,7 +67,8 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record findRecordByReaderIdAndBookId(final Long readerId,final Long bookId) {
-        final Optional<Record> record = Optional.of(recordRepository.findRecordByReaderIdAndBookId(readerId,bookId));
+        final Optional<Record> record = Optional.of(
+                recordRepository.findFirstByReaderIdAndBookIdAndDateValidReturnIsNull(readerId,bookId));
         return record.orElseThrow();
     }
 }

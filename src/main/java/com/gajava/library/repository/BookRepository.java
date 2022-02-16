@@ -13,7 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Page<Book> findBooksByTitle(String title, Pageable pageable);
 
-    Page<Book> findAllByCountBooksGreaterThanEqual(Integer countBooks, Pageable pageable);
+    Page<Book> findAllByCountBookGreaterThanEqual(Integer countBooks, Pageable pageable);
 
-    Page<Book> findAllByCountBooksEquals(Integer countBooks, Pageable pageable);
+    Page<Book> findAllByCountBookEquals(Integer countBooks, Pageable pageable);
 }

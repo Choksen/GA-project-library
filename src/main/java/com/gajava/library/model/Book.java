@@ -30,12 +30,16 @@ public class Book extends Base {
     private String description;
 
     @NotNull
-    @Column(name = "number_instances", nullable = false) //added min count = 0
-    private Integer countBooks;
+    @Column(name = "number_instances", nullable = false) //TODO added min count = 0
+    private Integer countBook;
 
     @ManyToMany
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors;
+
+    public Book(final Long bookId) {
+        this.setId(bookId);
+    }
 }

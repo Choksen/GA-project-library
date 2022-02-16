@@ -27,33 +27,30 @@ public class BookController {
 
 
     @PostMapping(value = "/save")
-    public ResponseEntity<BookDto> saveBook(@RequestBody @Valid BookDto bookDto) {
+    public ResponseEntity<BookDto> saveBook(@RequestBody @Valid final BookDto bookDto) {
         final Book book = bookMapper.fromDto(bookDto);
         bookService.create(book);
-        bookDto = bookMapper.toDto(bookService.create(book));
-        return new ResponseEntity<>(bookDto, HttpStatus.CREATED);
+        final BookDto responseBookDto = bookMapper.toDto(bookService.create(book));
+        return new ResponseEntity<>(responseBookDto, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<BookDto> findById(@PathVariable Long id) {
+    public ResponseEntity<BookDto> findById(@PathVariable final Long id) {
         final BookDto bookDto = bookMapper.toDto(bookService.findById(id));
         return new ResponseEntity<>(bookDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}/delete")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable final Long id) {
         bookService.delete(id);
     }
 
     //TODO findByYear?
-    //TODO переделать в сервисы Manager
     @GetMapping(value = "")
-    public ResponseEntity<List<BookDto>> findBySomething(@RequestBody @Valid FindBookByDto findBookByDto) {
+    public ResponseEntity<List<BookDto>> findBySomething(@RequestBody @Valid final FindBookByDto findBookByDto) {
+        final Book bookParams = bookMapper.fromDto(findBookByDto);
         final Page<Book> books = bookManager.findBooksBySomething(
-                findBookByDto.getTitle(),
-                findBookByDto.getGenre(),
-                findBookByDto.getCountBook(),
-                bookMapper.authorsToAuthorsDto(findBookByDto.getAuthors()),
+                bookParams,
                 paginationMapper.fromDto(findBookByDto.getPagination()));
         //final Integer countPages = books.getTotalPages(); Надо ли передавать на фронт количество страниц?
         final List<BookDto> booksDto = bookMapper.toDto(books);

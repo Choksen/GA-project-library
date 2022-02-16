@@ -39,7 +39,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void updateCountBooks(final Long id, final Integer returnedOrTaken) {
         final Book book = bookRepository.findById(id).orElseThrow();
-        book.setCountBooks(book.getCountBooks() + returnedOrTaken);
+        book.setCountBook(book.getCountBook() + returnedOrTaken);
         bookRepository.save(book);
     }
 
@@ -78,9 +78,9 @@ public class BookServiceImpl implements BookService {
     public Page<Book> findBooksByAvailability(final Integer count, final Pageable pageable) {
         final Optional<Page<Book>> books;
         if (count == 0) {
-            books = Optional.of(bookRepository.findAllByCountBooksEquals(count, pageable));
+            books = Optional.of(bookRepository.findAllByCountBookEquals(count, pageable));
         } else {
-            books = Optional.of(bookRepository.findAllByCountBooksGreaterThanEqual(count, pageable));
+            books = Optional.of(bookRepository.findAllByCountBookGreaterThanEqual(count, pageable));
         }
         return books.orElseThrow();
     }

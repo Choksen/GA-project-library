@@ -36,4 +36,21 @@ public class Record extends Base {
     @Column
     private String comment;
 
+    public Record(final Book book) {
+        this.setBook(book);
+    }
+
+    public Record(final Reader reader) {
+        this.setReader(reader);
+    }
+
+    public Record(final String comment) {
+        this.setComment(comment);
+    }
+
+    public Record(final Book book, final Reader reader, final String comment) {
+        this.setReader(reader);
+        this.setBook(book);
+        this.setComment(comment);
+    }
 }

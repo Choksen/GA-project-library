@@ -36,4 +36,7 @@ public class Reader extends Person {
     private Integer rating;
 
 
+    public Reader(final Long readerId) {
+        this.setId(readerId);
+    }
 }

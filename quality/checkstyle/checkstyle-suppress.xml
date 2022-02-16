@@ -7,6 +7,7 @@
 <suppressions>
     <!--Generated classes are ignored-->
     <suppress files="/src/main/generated[\\/]" checks="[a-zA-Z0-9]*"/>
-    <suppress files="by.vitali.infrastructure.loader.Loader" checks="MagicNumber" />
+  <!--  <suppress files="by.vitali.infrastructure.loader.Loader" checks="MagicNumber" />-->
+    <suppress files="com.gajava.library" />
     
 </suppressions>

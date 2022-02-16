@@ -25,7 +25,7 @@ public class ReaderController {
     private final PaginationMapper paginationMapper;
 
     @PostMapping(value = "/save")
-    public ResponseEntity<ResponseReaderDto> save(@RequestBody @Valid RequestReaderDto requestReaderDto) {
+    public ResponseEntity<ResponseReaderDto> save(@RequestBody @Valid final RequestReaderDto requestReaderDto) {
         final Reader reader = readerMapper.fromDto(requestReaderDto);
         readerService.create(reader);
         final ResponseReaderDto readerDto = readerMapper.toDto(reader);
@@ -33,18 +33,18 @@ public class ReaderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseReaderDto> findById(@PathVariable Long id) {
+    public ResponseEntity<ResponseReaderDto> findById(@PathVariable final Long id) {
         final ResponseReaderDto readerDto = readerMapper.toDto(readerService.findById(id));
         return new ResponseEntity<>(readerDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}/delete")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable final Long id) {
         readerService.delete(id);
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseReaderDto>> findAll(@RequestBody @Valid FindReadersDto readersDto) {
+    public ResponseEntity<List<ResponseReaderDto>> findAll(@RequestBody @Valid final FindReadersDto readersDto) {
         final Page<Reader> readers = readerService.findAll(paginationMapper.fromDto(readersDto.getPagination()));
         final List<ResponseReaderDto> responseReadersDto = readerMapper.toDto(readers);
         return new ResponseEntity<>(responseReadersDto, HttpStatus.OK);
