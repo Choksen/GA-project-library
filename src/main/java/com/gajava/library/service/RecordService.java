@@ -4,19 +4,17 @@ import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.model.Record;
 import org.springframework.data.domain.Page;
-
-import java.time.LocalDate;
+import org.springframework.data.domain.Pageable;
 
 public interface RecordService extends CrudService<Record> {
 
-    Record updateDateValidReturnAndComment(Long readerId, Long bookId, String comment, LocalDate dateValidReturn);
+    Page<Record> findAllByReader(Reader reader, Pageable pageable);
 
-    Page<Record> findAllByReader(Reader reader);
+    Page<Record> findAllByBook(Book book, Pageable pageable);
 
-    Page<Record> findAllByBook(Book book);
+    Page<Record> findAllByDateValidReturnIsNull(Pageable pageable);
 
-    Page<Record> findAllByDateValidReturnIsNull();
+    Page<Record> findAllByDateValidReturnIsNotNull(Pageable pageable);
 
-    Page<Record> findAllByDateValidReturnIsNotNull();
-
+    Record findRecordByReaderIdAndBookId(Long readerId, Long bookId);
 }
