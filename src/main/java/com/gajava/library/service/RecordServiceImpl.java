@@ -42,13 +42,13 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Page<Record> findAllByReader(final Reader reader,final Pageable pageable) {
+    public Page<Record> findAllByReader(final Reader reader, final Pageable pageable) {
         final Optional<Page<Record>> records = Optional.of(recordRepository.findAllByReader(reader, pageable));
         return records.orElseThrow();
     }
 
     @Override
-    public Page<Record> findAllByBook(final Book book,final Pageable pageable) {
+    public Page<Record> findAllByBook(final Book book, final Pageable pageable) {
         final Optional<Page<Record>> records = Optional.of(recordRepository.findAllByBook(book, pageable));
         return records.orElseThrow();
     }
@@ -66,9 +66,9 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record findRecordByReaderIdAndBookId(final Long readerId,final Long bookId) {
+    public Record findRecordByReaderIdAndBookId(final Long readerId, final Long bookId) {
         final Optional<Record> record = Optional.of(
-                recordRepository.findFirstByReaderIdAndBookIdAndDateValidReturnIsNull(readerId,bookId));
+                recordRepository.findFirstByReaderIdAndBookIdAndDateValidReturnIsNull(readerId, bookId));
         return record.orElseThrow();
     }
 }

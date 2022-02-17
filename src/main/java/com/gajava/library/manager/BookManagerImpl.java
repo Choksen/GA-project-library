@@ -23,7 +23,7 @@ public class BookManagerImpl implements BookManager {
         } else if (bookParams.getCountBook() != null) {
             books = bookService.findBooksByAvailability(bookParams.getCountBook(), pageable);
         } else if (bookParams.getAuthors() != null) {
-            books = bookService.findBookByAuthor(bookParams.getAuthors(),pageable);
+            books = bookService.findBookByAuthor(bookParams.getAuthors().stream().findFirst().get(), pageable);
         } else {
             books = bookService.findAll(pageable);
         }

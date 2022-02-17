@@ -1,7 +1,6 @@
 package com.gajava.library.mapper;
 
 import com.gajava.library.controller.dto.pagination.PaginationDto;
-import com.gajava.library.controller.dto.pagination.SortDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -17,13 +16,13 @@ public interface PaginationMapper {
     })
     PaginationDto toDto(Pageable pageable);
 
-    //TODO default sort
-    default Sort sortToSortDto(SortDto sortDto) {
-        return Sort.by(sortDto.getDirection(), sortDto.getProperty());
-    }
-
     default Pageable fromDto(PaginationDto paginationDto) {
-        final Sort sort = Sort.by(paginationDto.getSort().getDirection(), paginationDto.getSort().getProperty());
+        final Sort sort;
+        if (paginationDto.getSort() == null) {
+            sort = Sort.by("id");
+        } else {
+            sort = Sort.by(paginationDto.getSort().getDirection(), paginationDto.getSort().getProperty());
+        }
         return PageRequest.of(
                 paginationDto.getPageNumber(),
                 paginationDto.getSize(),

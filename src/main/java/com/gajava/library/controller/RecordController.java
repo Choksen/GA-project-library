@@ -56,11 +56,11 @@ public class RecordController {
     }
 
     @PostMapping(value = "/update")
-    public ResponseEntity<ResponseRecordDto> returnBook(@RequestBody final RequestUpdateRecordDto updateRecordDto){
+    public ResponseEntity<ResponseRecordDto> returnBook(@RequestBody final RequestUpdateRecordDto updateRecordDto) {
         final Record recordParams = recordMapper.fromDto(updateRecordDto);
         final ResponseRecordDto responseRecordDto = recordMapper.toDto(
                 recordManager.updateDateValidReturnAndComment(recordParams));
-        return new ResponseEntity<>(responseRecordDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseRecordDto, HttpStatus.OK);
     }
 
 

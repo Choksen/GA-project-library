@@ -86,8 +86,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<Book> findBookByAuthor(final Set<Author> authorSet, final Pageable pageable) {
-        //  final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthors(authorSet, pageable));
-        return Page.empty();
+    public Page<Book> findBookByAuthor(final Author author, final Pageable pageable) {
+        final Optional<Page<Book>> books = Optional.of(bookRepository.findAllByAuthor(
+                author.getFirstName(),
+                author.getLastName(),
+                pageable));
+        return books.orElseThrow();
     }
 }

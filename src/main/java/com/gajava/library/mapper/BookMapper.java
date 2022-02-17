@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 @Mapper(componentModel = "spring")
-public interface BookMapper extends BaseMapping<BookDto, Book> {
+public interface BookMapper {
     @Mapping(target = "numberInstances", source = "book.countBook")
     BookDto toDto(Book book);
 
@@ -23,12 +23,10 @@ public interface BookMapper extends BaseMapping<BookDto, Book> {
 
     List<BookDto> toDto(Page<Book> books);
 
+    @Mapping(target = "authors",expression = "java(authorToAuthorDto(findBookByDto.getAuthor()))")
     Book fromDto(FindBookByDto findBookByDto);
 
     default Set<Author> authorsToAuthorsDto(Set<AuthorDto> authorsDto) {
-        if (authorsDto == null) {
-            return null;
-        }
         final Set<Author> authors = new HashSet<>();
         for (final AuthorDto authorDto : authorsDto) {
             final Author author = new Author();
@@ -38,6 +36,7 @@ public interface BookMapper extends BaseMapping<BookDto, Book> {
         }
         return authors;
     }
+
 
     default Set<AuthorDto> authorsDtoToAuthors(Set<Author> authors) {
         final Set<AuthorDto> authorsDto = new HashSet<>();
@@ -49,5 +48,15 @@ public interface BookMapper extends BaseMapping<BookDto, Book> {
         return authorsDto;
     }
 
-
+    default Set<Author> authorToAuthorDto(AuthorDto authorDto) {
+        if (authorDto == null) {
+            return null;
+        }
+        final Author author = new Author();
+        author.setFirstName(authorDto.getFullName().split(" ")[0]);
+        author.setLastName(authorDto.getFullName().split(" ")[1]);
+        final Set<Author> authors = new HashSet<>();
+        authors.add(author);
+        return authors;
+    }
 }

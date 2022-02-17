@@ -49,7 +49,7 @@ public interface RecordMapper {
         }
     }
 
-    default Record fromDto(RequestUpdateRecordDto updateRecordDto){
+    default Record fromDto(RequestUpdateRecordDto updateRecordDto) {
         final Book book = new Book(updateRecordDto.getBookId());
         final Reader reader = new Reader(updateRecordDto.getReaderId());
         return new Record(

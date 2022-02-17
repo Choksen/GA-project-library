@@ -15,7 +15,7 @@ public class FindBookByDto {
     private String title;
     private String genre;
     private Integer countBook;
-    private Set<AuthorDto> authors;
+    private AuthorDto author;
     @NotNull
     @Valid
     private PaginationDto pagination;

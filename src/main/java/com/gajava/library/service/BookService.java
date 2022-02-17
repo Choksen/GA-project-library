@@ -17,6 +17,6 @@ public interface BookService extends CrudService<Book> {
 
     Page<Book> findBooksByAvailability(Integer count, Pageable pageable);
 
-    Page<Book> findBookByAuthor(Set<Author> authorSet, Pageable pageable);
+    Page<Book> findBookByAuthor(Author author, Pageable pageable);
 
 }

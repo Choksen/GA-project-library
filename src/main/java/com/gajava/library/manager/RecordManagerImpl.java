@@ -36,7 +36,7 @@ public class RecordManagerImpl implements RecordManager {
         if (reader.getRating() < 20) {
             throw new IllegalArgumentException("So low rating");
         }
-        readerService.updateBooksForAdd(reader.getId(),book);
+        readerService.updateBooksForAdd(reader.getId(), book);
 
         record.setDateReceipt(LocalDate.now());
         if (record.getDateExpectedReturn() == null) {
@@ -75,11 +75,11 @@ public class RecordManagerImpl implements RecordManager {
     @Override
     public Page<Record> findBySomething(final Record record, final Pageable pageable) {
         final Page<Record> records;
-        if(record.getReader() != null){
-            records = recordService.findAllByReader(record.getReader(),pageable);
-        } else if(record.getBook() != null){
-            records = recordService.findAllByBook(record.getBook(),pageable);
-        } else if(record.getComment() != null){ //TODO поменять логику обработки на руках или нет, тк работает криво
+        if (record.getReader() != null) {
+            records = recordService.findAllByReader(record.getReader(), pageable);
+        } else if (record.getBook() != null) {
+            records = recordService.findAllByBook(record.getBook(), pageable);
+        } else if (record.getComment() != null) { //TODO поменять логику обработки на руках или нет, тк работает криво
             records = recordService.findAllByDateValidReturnIsNotNull(pageable); //возвращена
         } else {
             records = recordService.findAllByDateValidReturnIsNull(pageable); //на руках
