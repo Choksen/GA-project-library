@@ -1,5 +1,7 @@
 package com.gajava.library.manager;
 
+import com.gajava.library.exception.EntityNotFoundException;
+import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.model.Record;
@@ -7,6 +9,7 @@ import com.gajava.library.service.BookService;
 import com.gajava.library.service.ReaderService;
 import com.gajava.library.service.RecordService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RecordManagerImpl implements RecordManager {
     private final RecordService recordService;
     private final ReaderService readerService;
@@ -28,13 +32,13 @@ public class RecordManagerImpl implements RecordManager {
     public Record create(final Record record) {
         final Book book = bookService.findById(record.getBook().getId());
         if (book.getCountBook() == 0) {
-            throw new IllegalArgumentException("no books available");
+            throw new InvalidArgumentsException("There are currently 0 copies of this book in the library");
         }
         bookService.updateCountBooks(book.getId(), -1);
 
         final Reader reader = readerService.findById(record.getReader().getId());
         if (reader.getRating() < 20) {
-            throw new IllegalArgumentException("So low rating");
+            throw new InvalidArgumentsException("The rating of this user does not allow him to take a new book");
         }
         readerService.updateBooksForAdd(reader.getId(), book);
 
@@ -42,9 +46,8 @@ public class RecordManagerImpl implements RecordManager {
         if (record.getDateExpectedReturn() == null) {
             record.setDateExpectedReturn(record.getDateReceipt().plusDays(3));
         }
-        final Optional<Record> record1 = Optional.of(recordService.create(record));
 
-        return record1.orElseThrow();
+        return recordService.create(record);
     }
 
     @Transactional
@@ -55,9 +58,11 @@ public class RecordManagerImpl implements RecordManager {
 
         final Reader reader = readerService.findById(recordParams.getReader().getId());
 
-        //TODO exception если не найдет такую запись
         final Record record = Optional.of(
-                recordService.findRecordByReaderIdAndBookId(reader.getId(), book.getId())).orElseThrow();
+                        recordService.findRecordByReaderIdAndBookId(reader.getId(), book.getId()))
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "There are no records with the id of the reader" + reader.getId()
+                                + " and the id of the book " + book.getId()));
         record.setDateValidReturn(LocalDate.now());
         record.setComment(recordParams.getComment());
 
@@ -68,8 +73,7 @@ public class RecordManagerImpl implements RecordManager {
 
         readerService.updateBooksAndRating(reader.getId(), book.getId(), rating);
 
-        final Optional<Record> recordUpdate = Optional.of(recordService.create(record));
-        return recordUpdate.orElseThrow();
+        return recordService.create(record);
     }
 
     @Override
@@ -79,7 +83,7 @@ public class RecordManagerImpl implements RecordManager {
             records = recordService.findAllByReader(record.getReader(), pageable);
         } else if (record.getBook() != null) {
             records = recordService.findAllByBook(record.getBook(), pageable);
-        } else if (record.getComment() != null) { //TODO поменять логику обработки на руках или нет, тк работает криво
+        } else if (record.getComment() != null) {
             records = recordService.findAllByDateValidReturnIsNotNull(pageable); //возвращена
         } else {
             records = recordService.findAllByDateValidReturnIsNull(pageable); //на руках

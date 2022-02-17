@@ -3,6 +3,7 @@ package com.gajava.library.controller.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -13,17 +14,24 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class BookDto {
 
-    @NotNull
+    @NotNull(message = "Title cannot be null")
+    @NotBlank(message = "Title cannot be blank")
     private String title;
-    @NotNull
+
+    @NotNull(message = "Genre cannot be null")
+    @NotBlank(message = "Genre cannot be blank")
     private String genre;
-    @NotNull
+
+    @NotNull(message = "Year cannot be null")
     private Integer year;
-    @NotNull
+
+    @NotNull(message = "Description cannot be null")
     private String description;
-    @NotNull
+
+    @NotNull(message = "Number Instances cannot be null")
     private Integer numberInstances;
-    @NotNull
+
+    @NotNull(message = "Authors cannot be null")
     @Valid
     private Set<AuthorDto> authors;
 

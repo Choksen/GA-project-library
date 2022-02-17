@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @RequiredArgsConstructor
 public class FindReadersDto {
-    @NotNull
+    @NotNull(message = "Pagination cannot be null")
     @Valid
     private PaginationDto pagination;
 }

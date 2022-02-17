@@ -10,9 +10,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @RequiredArgsConstructor
 public class RequestUpdateRecordDto {
-    @NotNull
+    @NotNull(message = "Book id cannot be null")
     private Long bookId;
-    @NotNull
+
+    @NotNull(message = "Reader id cannot be null")
     private Long readerId;
 
     private String comment;

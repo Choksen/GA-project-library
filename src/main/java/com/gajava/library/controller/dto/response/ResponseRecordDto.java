@@ -11,18 +11,20 @@ import java.time.LocalDate;
 @Setter
 @RequiredArgsConstructor
 public class ResponseRecordDto {
-    @NotNull
+    @NotNull(message = "Book id cannot be null")
     private Long bookId;
-    @NotNull
+
+    @NotNull(message = "Reader id cannot be null")
     private Long readerId;
-    @NotNull
+
+    @NotNull(message = "Date receipt cannot be null")
     private LocalDate dateReceipt;
-    @NotNull
+
+    @NotNull(message = "Date expected return cannot be null")
     private LocalDate dateExpectedReturn;
 
     private LocalDate dateValidReturn;
     private String comment;
-
 
 
 }

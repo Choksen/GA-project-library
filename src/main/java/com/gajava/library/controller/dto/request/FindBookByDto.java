@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +15,8 @@ public class FindBookByDto {
     private String genre;
     private Integer countBook;
     private AuthorDto author;
-    @NotNull
+
+    @NotNull(message = "Pagination cannot be null")
     @Valid
     private PaginationDto pagination;
 }

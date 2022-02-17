@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,6 +17,6 @@ public class FindRecordsDto {
 
     private String comment;
 
-    @NotNull
+    @NotNull(message = "Pagination cannot be null")
     private PaginationDto pagination;
 }

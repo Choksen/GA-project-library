@@ -3,6 +3,7 @@ package com.gajava.library.service;
 import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.repository.ReaderRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ReaderServiceImpl implements ReaderService {
     final ReaderRepository readerRepository;
 
@@ -34,6 +36,7 @@ public class ReaderServiceImpl implements ReaderService {
         final Book bookForDelete = books.stream().filter(book -> book.getId().equals(idBook)).findFirst().orElseThrow();
         books.remove(bookForDelete);
         readerRepository.save(reader);
+        log.info("Added a book for the reader with id " + reader.getId());
     }
 
     @Override

@@ -8,6 +8,7 @@ import org.mapstruct.Mappings;
 
 @Mapper(componentModel = "spring")
 public interface AuthorMapper {
+    //TODO ArrayIndexOutOfBoundsException handler
     @Mappings({
             @Mapping(target = "firstName", expression = "java(dto.getFullName().split(\" \")[0])"),
             @Mapping(target = "lastName", expression = "java(dto.getFullName().split(\" \")[1])")

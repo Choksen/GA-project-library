@@ -10,9 +10,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @RequiredArgsConstructor
 public class PaginationDto {
-    @NotNull
+    @NotNull(message = "Page number cannot be null")
     private Integer pageNumber;
-    @NotNull
+
+    @NotNull(message = "Size cannot be null")
     private Integer size;
 
     private SortDto sort;

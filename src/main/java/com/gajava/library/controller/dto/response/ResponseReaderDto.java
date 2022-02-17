@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -13,18 +14,28 @@ import java.util.List;
 @Setter
 @RequiredArgsConstructor
 public class ResponseReaderDto {
-    @NotNull
+    @NotNull(message = "First Name cannot be null")
+    @NotBlank(message = "First Name cannot be blank")
     private final String firstName;
-    @NotNull
+
+    @NotNull(message = "Last Name cannot be null")
+    @NotBlank(message = "Last Name cannot be blank")
     private final String lastName;
-    @NotNull
+
+    @NotNull(message = "Email cannot be null")
+    @NotBlank(message = "Email Name cannot be blank")
     @Email
     private final String email;
-    @NotNull
+
+    @NotNull(message = "Number phone cannot be null")
+    @NotBlank(message = "Number phone cannot be blank")
     private final String phone;
-    @NotNull
+
+    @NotNull(message = "Number reader cannot be null")
     private final Long numberReader;
-    @NotNull
+
+    @NotNull(message = "Rating cannot be null")
     private final Integer rating;
+
     private final List<BookDto> bookDtoList;
 }

@@ -3,6 +3,7 @@ package com.gajava.library.service;
 import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import com.gajava.library.repository.BookRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorService authorService;
@@ -41,6 +43,7 @@ public class BookServiceImpl implements BookService {
         final Book book = bookRepository.findById(id).orElseThrow();
         book.setCountBook(book.getCountBook() + returnedOrTaken);
         bookRepository.save(book);
+        log.info("Took a book with id = " + book.getId() + " and reduced the number of books by 1");
     }
 
 
