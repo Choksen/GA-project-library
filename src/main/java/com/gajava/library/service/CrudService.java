@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CrudService<Entity extends Base> {
-    Entity create(Entity entity);
+    Entity save(Entity entity);
 
     Entity findById(Long id);
 

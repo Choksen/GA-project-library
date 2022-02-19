@@ -9,12 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("SELECT b FROM Book b JOIN b.authors a " +
-            "WHERE a.firstName LIKE %:first_name%  AND a.lastName LIKE %:last_name%")
+            "WHERE a.firstName LIKE %:first_name%  AND a.lastName LIKE %:last_name% " +
+            "OR a.lastName LIKE %:first_name%  AND a.firstName LIKE %:last_name%")
     Page<Book> findAllByAuthor(@Param("first_name") String firstName,
                                @Param("last_name") String lastName,
                                Pageable pageable);
 
-    Page<Book> findAllByGenre(String genre, Pageable pageable);
+    Page<Book> findAllByGenreLike(String genre, Pageable pageable);
 
     Page<Book> findBooksByTitle(String title, Pageable pageable);
 

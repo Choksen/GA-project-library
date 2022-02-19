@@ -30,8 +30,8 @@ public class RecordController {
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseRecordDto> save(@RequestBody @Valid final RequestRecordDto requestRecordDto) {
         final Record record = recordMapper.fromDto(requestRecordDto);
-        recordManager.create(record);
-        return new ResponseEntity<>(recordMapper.toDto(record), HttpStatus.CREATED);
+        final ResponseRecordDto recordCreated = recordMapper.toDto(recordManager.create(record));
+        return new ResponseEntity<>(recordCreated, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")

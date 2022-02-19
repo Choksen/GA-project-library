@@ -5,4 +5,12 @@ public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(final String message) {
         super(message);
     }
+
+    public EntityNotFoundException(final String entity, final Long id) {
+        super("It is impossible to find the " + entity + " by id " + id);
+    }
+
+    public EntityNotFoundException(final String entity, final String filter) {
+        super("It is impossible to find the " + entity + " from filter : " + filter);
+    }
 }

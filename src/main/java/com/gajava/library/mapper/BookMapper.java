@@ -26,7 +26,7 @@ public interface BookMapper {
     @Mapping(target = "authors",expression = "java(authorToAuthorDto(findBookByDto.getAuthor()))")
     Book fromDto(FindBookByDto findBookByDto);
 
-    default Set<Author> authorsToAuthorsDto(Set<AuthorDto> authorsDto) {
+    default Set<Author> authorsToAuthorsDto(final Set<AuthorDto> authorsDto) {
         final Set<Author> authors = new HashSet<>();
         for (final AuthorDto authorDto : authorsDto) {
             final Author author = new Author();
@@ -38,7 +38,7 @@ public interface BookMapper {
     }
 
 
-    default Set<AuthorDto> authorsDtoToAuthors(Set<Author> authors) {
+    default Set<AuthorDto> authorsDtoToAuthors(final Set<Author> authors) {
         final Set<AuthorDto> authorsDto = new HashSet<>();
         for (final Author author : authors) {
             final AuthorDto authorDto = new AuthorDto();
@@ -48,7 +48,7 @@ public interface BookMapper {
         return authorsDto;
     }
 
-    default Set<Author> authorToAuthorDto(AuthorDto authorDto) {
+    default Set<Author> authorToAuthorDto(final AuthorDto authorDto) {
         if (authorDto == null) {
             return null;
         }

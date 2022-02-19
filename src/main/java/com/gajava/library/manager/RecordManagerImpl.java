@@ -21,7 +21,6 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class RecordManagerImpl implements RecordManager {
     private final RecordService recordService;
     private final ReaderService readerService;
@@ -47,7 +46,7 @@ public class RecordManagerImpl implements RecordManager {
             record.setDateExpectedReturn(record.getDateReceipt().plusDays(3));
         }
 
-        return recordService.create(record);
+        return recordService.save(record);
     }
 
     @Transactional
@@ -73,7 +72,7 @@ public class RecordManagerImpl implements RecordManager {
 
         readerService.updateBooksAndRating(reader.getId(), book.getId(), rating);
 
-        return recordService.create(record);
+        return recordService.save(record);
     }
 
     @Override
@@ -84,9 +83,9 @@ public class RecordManagerImpl implements RecordManager {
         } else if (record.getBook() != null) {
             records = recordService.findAllByBook(record.getBook(), pageable);
         } else if (record.getComment() != null) {
-            records = recordService.findAllByDateValidReturnIsNotNull(pageable); //возвращена
+            records = recordService.findAllByDateValidReturnIsNotNull(pageable);
         } else {
-            records = recordService.findAllByDateValidReturnIsNull(pageable); //на руках
+            records = recordService.findAllByDateValidReturnIsNull(pageable);
         }
         return records;
     }

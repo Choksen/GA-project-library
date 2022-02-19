@@ -14,7 +14,7 @@ public interface AuthorMapper {
             @Mapping(target = "lastName", expression = "java(dto.getFullName().split(\" \")[1])")
     })
     Author fromDto(AuthorDto dto);
-
+    
     @Mapping(target = "fullName", expression = "java(author.getFirstName() + ' ' + author.getLastName())")
     AuthorDto toDto(Author author);
 }

@@ -26,7 +26,7 @@ public interface RecordMapper {
     ResponseRecordDto toDto(Record record);
 
 
-    default Record fromDto(RequestRecordDto recordDto) {
+    default Record fromDto(final RequestRecordDto recordDto) {
         final Book book = new Book();
         book.setId(recordDto.getBookId());
         final Reader reader = new Reader();
@@ -39,7 +39,7 @@ public interface RecordMapper {
     }
 
 
-    default Record fromDto(FindRecordsDto recordDto) {
+    default Record fromDto(final FindRecordsDto recordDto) {
         if (recordDto.getBookId() != null) {
             return new Record(new Book(recordDto.getBookId()));
         } else if (recordDto.getReaderId() != null) {
@@ -49,7 +49,7 @@ public interface RecordMapper {
         }
     }
 
-    default Record fromDto(RequestUpdateRecordDto updateRecordDto) {
+    default Record fromDto(final RequestUpdateRecordDto updateRecordDto) {
         final Book book = new Book(updateRecordDto.getBookId());
         final Reader reader = new Reader(updateRecordDto.getReaderId());
         return new Record(

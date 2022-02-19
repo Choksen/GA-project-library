@@ -27,7 +27,7 @@ public class ReaderController {
     @PostMapping(value = "/save")
     public ResponseEntity<ResponseReaderDto> save(@RequestBody @Valid final RequestReaderDto requestReaderDto) {
         final Reader reader = readerMapper.fromDto(requestReaderDto);
-        readerService.create(reader);
+        readerService.save(reader);
         final ResponseReaderDto readerDto = readerMapper.toDto(reader);
         return new ResponseEntity<>(readerDto, HttpStatus.CREATED);
     }

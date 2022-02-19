@@ -29,8 +29,7 @@ public class BookController {
     @PostMapping(value = "/save")
     public ResponseEntity<BookDto> saveBook(@RequestBody @Valid final BookDto bookDto) {
         final Book book = bookMapper.fromDto(bookDto);
-        bookService.create(book);
-        final BookDto responseBookDto = bookMapper.toDto(bookService.create(book));
+        final BookDto responseBookDto = bookMapper.toDto(bookManager.create(book));
         return new ResponseEntity<>(responseBookDto, HttpStatus.CREATED);
     }
 

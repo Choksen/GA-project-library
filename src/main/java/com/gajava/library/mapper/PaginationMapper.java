@@ -16,7 +16,7 @@ public interface PaginationMapper {
     })
     PaginationDto toDto(Pageable pageable);
 
-    default Pageable fromDto(PaginationDto paginationDto) {
+    default Pageable fromDto(final PaginationDto paginationDto) {
         final Sort sort;
         if (paginationDto.getSort() == null) {
             sort = Sort.by("id");
