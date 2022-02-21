@@ -35,7 +35,7 @@ public class BookManagerImpl implements BookManager {
                                            final Pageable pageable) {
         final Page<Book> books;
         if (bookParams.getTitle() != null) {
-            books = bookService.findBooksByTitle(bookParams.getTitle(), pageable);
+            books = bookService.findBooksByTitle(/*bookParams.getTitle()*/null, pageable);
         } else if (bookParams.getGenre() != null) {
             books = bookService.findBooksByGenre(bookParams.getGenre(), pageable);
         } else if (bookParams.getCountBook() != null) {
