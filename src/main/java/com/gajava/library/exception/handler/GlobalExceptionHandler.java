@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +34,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(SaveEntityException.class)
     public ResponseEntity<ExceptionResponse> handleSaveEntityException(final SaveEntityException e) {
-        final ExceptionResponse response = new ExceptionResponse(e.getMessage(),LocalDate.now(),null);
-        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+        final ExceptionResponse response = new ExceptionResponse(e.getMessage(), LocalDate.now(), null);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex,
+                                                                  final HttpHeaders headers,
+                                                                  final HttpStatus status,
+                                                                  final WebRequest request) {
         final BindingResult result = ex.getBindingResult();
         final List<FieldError> fieldErrors = result.getFieldErrors();
         final List<String> errorMessages = new ArrayList<>();

@@ -6,6 +6,7 @@ import com.gajava.library.exception.SaveEntityException;
 import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.repository.ReaderRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,28 +15,32 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ReaderServiceImpl implements ReaderService {
-    final ReaderRepository readerRepository;
-
-    public ReaderServiceImpl(final ReaderRepository readerRepository) {
-        this.readerRepository = readerRepository;
-    }
+    private final ReaderRepository readerRepository;
 
     @Override
     public Reader save(final Reader reader) {
+        if (Objects.isNull(reader)) {
+            throw new InvalidArgumentsException("The reader cannot be null");
+        }
         log.info("Try to save reader");
         reader.setNumberReader((long) (10000 + Math.random() * 89999));
         reader.setRating(50);
-        Optional<Reader> reader1 = Optional.ofNullable(readerRepository.save(reader));
+        Optional<Reader> reader1 = Optional.of(readerRepository.save(reader));
         return reader1.orElseThrow(() -> new SaveEntityException("Reader"));
     }
 
     @Override
     public void updateBooksAndRating(final Long id, final Long idBook, final Integer rating) {
+        if (Objects.isNull(id) || Objects.isNull(idBook) || Objects.isNull(rating)) {
+            throw new InvalidArgumentsException("The reader id, book id or rating cannot be null");
+        }
         log.info("Starting to remove the book with id " + idBook
                 + " from the reader with id " + id + " and update his rating");
         final Reader reader = findById(id);
@@ -51,6 +56,9 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public void updateBooksForAdd(final Long id, final Book book) {
+        if (Objects.isNull(id) || Objects.isNull(book)) {
+            throw new InvalidArgumentsException("The reader id or book cannot be null");
+        }
         log.info("Trying to add a book with id " + book.getId() + "from the reader with id " + id);
         final Reader reader = findById(id);
         final List<Book> books = reader.getBooks();
@@ -61,6 +69,9 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public Reader findById(final Long id) {
+        if (Objects.isNull(id)) {
+            throw new InvalidArgumentsException("The reader id cannot be null");
+        }
         log.info("Trying to find a reader by id " + id);
         return readerRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Reader", id));
@@ -68,6 +79,9 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public void delete(final Long id) {
+        if (Objects.isNull(id)) {
+            throw new InvalidArgumentsException("The reader id cannot be null");
+        }
         log.info("Trying to remove reader with id " + id);
         try {
             readerRepository.deleteById(id);
@@ -81,6 +95,9 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public Page<Reader> findAll(final Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            throw new InvalidArgumentsException("The pageable cannot be null");
+        }
         log.info("Looking for all the books");
         return readerRepository.findAll(pageable);
     }

@@ -5,6 +5,7 @@ import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.exception.SaveEntityException;
 import com.gajava.library.model.Author;
 import com.gajava.library.repository.AuthorRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,19 +13,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
-    final AuthorRepository authorRepository;
-
-    public AuthorServiceImpl(final AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
+    private final AuthorRepository authorRepository;
 
     @Override
     public Author save(final Author author) {
+        if (Objects.isNull(author)) {
+            throw new InvalidArgumentsException("The author cannot be null");
+        }
         log.info("Try to create author " + author.getFirstName() + " " + author.getLastName());
         Author authorCreated;
         try {
@@ -39,12 +41,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findById(final Long id) {
+        if (Objects.isNull(id)) {
+            throw new InvalidArgumentsException("The author id cannot be null");
+        }
         log.info("Trying to find an author by id " + id);
         return authorRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Author", id));
     }
 
     @Override
     public void delete(final Long id) {
+        if (Objects.isNull(id)) {
+            throw new InvalidArgumentsException("The author id cannot be null");
+        }
         log.info("Trying to remove author with id " + id);
         try {
             authorRepository.deleteById(id);
@@ -58,12 +66,18 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Page<Author> findAll(final Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            throw new InvalidArgumentsException("The pageable cannot be null");
+        }
         log.info("Try to find all authors");
         return authorRepository.findAll(pageable);
     }
 
     @Override
     public Author findOrCreate(final Author author) {
+        if (Objects.isNull(author)) {
+            throw new InvalidArgumentsException("The author cannot be null");
+        }
         log.info("Find or create author " + author.getLastName() + " " + author.getLastName());
         Author authorWithId = authorRepository.findAuthorByFirstNameAndLastName(
                 author.getFirstName(),

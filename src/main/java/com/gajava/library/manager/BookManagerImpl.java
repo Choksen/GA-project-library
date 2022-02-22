@@ -1,5 +1,6 @@
 package com.gajava.library.manager;
 
+import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import com.gajava.library.service.AuthorService;
@@ -23,6 +24,9 @@ public class BookManagerImpl implements BookManager {
     @Transactional
     @Override
     public Book create(final Book book) {
+        if (Objects.isNull(book)) {
+            throw new InvalidArgumentsException("The book cannot be null");
+        }
         final Set<Author> authors = new HashSet<>();
         for (final Author author : book.getAuthors()) {
             authors.add(authorService.findOrCreate(author));
@@ -34,14 +38,17 @@ public class BookManagerImpl implements BookManager {
     @Override
     public Page<Book> findBooksBySomething(final Book bookParams,
                                            final Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            throw new InvalidArgumentsException("The pageable cannot be null");
+        }
         final Page<Book> books;
         if (Objects.nonNull(bookParams.getTitle())) {
             books = bookService.findBooksByTitle(bookParams.getTitle(), pageable);
-        } else if (bookParams.getGenre() != null) {
+        } else if (Objects.nonNull(bookParams.getGenre())) {
             books = bookService.findBooksByGenre(bookParams.getGenre(), pageable);
-        } else if (bookParams.getCountBook() != null) {
+        } else if (Objects.nonNull(bookParams.getCountBook())) {
             books = bookService.findBooksByAvailability(bookParams.getCountBook(), pageable);
-        } else if (bookParams.getAuthors() != null) {
+        } else if (Objects.nonNull(bookParams.getAuthors())) {
             books = bookService.findBookByAuthor(bookParams.getAuthors().stream().findFirst().get(), pageable);
         } else {
             books = bookService.findAll(pageable);

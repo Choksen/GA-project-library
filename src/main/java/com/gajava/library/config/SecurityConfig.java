@@ -28,6 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/records/*",
                         "/authors/*",
                         "/books/*",
+                        "/books/**",
                         "/readers",
                         "/readers/*",
                         "/records",

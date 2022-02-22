@@ -9,7 +9,6 @@ import com.gajava.library.service.BookService;
 import com.gajava.library.service.ReaderService;
 import com.gajava.library.service.RecordService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -29,6 +29,9 @@ public class RecordManagerImpl implements RecordManager {
     @Transactional
     @Override
     public Record create(final Record record) {
+        if (Objects.isNull(record)) {
+            throw new InvalidArgumentsException("The record cannot be null");
+        }
         final Book book = bookService.findById(record.getBook().getId());
         if (book.getCountBook() == 0) {
             throw new InvalidArgumentsException("There are currently 0 copies of this book in the library");
@@ -52,6 +55,9 @@ public class RecordManagerImpl implements RecordManager {
     @Transactional
     @Override
     public Record updateDateValidReturnAndComment(final Record recordParams) {
+        if (Objects.isNull(recordParams)) {
+            throw new InvalidArgumentsException("Record parameters cannot be null");
+        }
         final Book book = bookService.findById(recordParams.getBook().getId());
         bookService.updateCountBooks(book.getId(), 1);
 
@@ -77,12 +83,15 @@ public class RecordManagerImpl implements RecordManager {
 
     @Override
     public Page<Record> findBySomething(final Record record, final Pageable pageable) {
+        if (Objects.isNull(pageable)) {
+            throw new InvalidArgumentsException("The pageable cannot be null");
+        }
         final Page<Record> records;
-        if (record.getReader() != null) {
+        if (Objects.nonNull(record.getReader())) {
             records = recordService.findAllByReader(record.getReader(), pageable);
-        } else if (record.getBook() != null) {
+        } else if (Objects.nonNull(record.getBook())) {
             records = recordService.findAllByBook(record.getBook(), pageable);
-        } else if (record.getComment() != null) {
+        } else if (Objects.nonNull(record.getComment())) {
             records = recordService.findAllByDateValidReturnIsNotNull(pageable);
         } else {
             records = recordService.findAllByDateValidReturnIsNull(pageable);

@@ -2,8 +2,8 @@ package com.gajava.library.exception;
 
 public class EntityNotFoundException extends RuntimeException {
 
-    public EntityNotFoundException(final String message) {
-        super(message);
+    public EntityNotFoundException(final String entity) {
+        super("It is impossible to find the " + entity);
     }
 
     public EntityNotFoundException(final String entity, final Long id) {

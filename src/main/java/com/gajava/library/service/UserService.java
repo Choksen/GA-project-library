@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,9 @@ public class UserService {
 
 
     public User save(final User user) {
+        if (Objects.isNull(user)) {
+            throw new InvalidArgumentsException("User cannot be null");
+        }
         log.info("Try to save user");
         final Role userRole = Optional.ofNullable(roleRepository.findRoleByName("ROLE_USER")).orElseThrow(
                 () -> new EntityNotFoundException("Role", "ROLE_USER"));
@@ -44,12 +48,18 @@ public class UserService {
     }
 
     public User findByLogin(final String login) {
+        if (Objects.isNull(login)) {
+            throw new InvalidArgumentsException("Login cannot be null");
+        }
         log.info("Trying to find a user by login: " + login);
         return Optional.ofNullable(userRepository.findUserByLogin(login)).orElseThrow(
                 () -> new EntityNotFoundException("User", "(login) " + login));
     }
 
     public User findByLoginAndPassword(final String login, final String password) {
+        if (Objects.isNull(login) || Objects.isNull(password)) {
+            throw new InvalidArgumentsException("Login or password cannot be null");
+        }
         log.info("Trying to find a user with login: " + login + " and verification his password");
         final User user = findByLogin(login);
         if (passwordEncoder.matches(password, user.getPassword())) {
