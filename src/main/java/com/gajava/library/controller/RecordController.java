@@ -40,8 +40,9 @@ public class RecordController {
     }
 
     @DeleteMapping(value = "/{id}/delete")
-    public void delete(@PathVariable final Long id) {
+    public ResponseEntity<String> delete(@PathVariable final Long id) {
         recordService.delete(id);
+        return new ResponseEntity<>("The record has been deleted",HttpStatus.OK);
     }
 
     @GetMapping
@@ -50,7 +51,6 @@ public class RecordController {
         final Page<Record> records = recordManager.findBySomething(
                 recordParams,
                 paginationMapper.fromDto(recordDto.getPagination()));
-        //final Integer countPages = books.getTotalPages(); Надо ли передавать на фронт количество страниц?
         final List<ResponseRecordDto> responseRecordDto = recordMapper.toDto(records);
         return new ResponseEntity<>(responseRecordDto, HttpStatus.OK);
     }

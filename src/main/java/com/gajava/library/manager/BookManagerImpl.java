@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -34,8 +35,8 @@ public class BookManagerImpl implements BookManager {
     public Page<Book> findBooksBySomething(final Book bookParams,
                                            final Pageable pageable) {
         final Page<Book> books;
-        if (bookParams.getTitle() != null) {
-            books = bookService.findBooksByTitle(/*bookParams.getTitle()*/null, pageable);
+        if (Objects.nonNull(bookParams.getTitle())) {
+            books = bookService.findBooksByTitle(bookParams.getTitle(), pageable);
         } else if (bookParams.getGenre() != null) {
             books = bookService.findBooksByGenre(bookParams.getGenre(), pageable);
         } else if (bookParams.getCountBook() != null) {

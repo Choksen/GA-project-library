@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 @Service
@@ -29,7 +28,7 @@ public class BookServiceImpl implements BookService {
     public Book save(final Book book) {
         log.info("Try to create book");
         final Optional<Book> bookCreated = Optional.of(bookRepository.save(book));
-        return bookCreated.orElseThrow(()-> new SaveEntityException("Book"));
+        return bookCreated.orElseThrow(() -> new SaveEntityException("Book"));
     }
 
     @Override
@@ -46,7 +45,7 @@ public class BookServiceImpl implements BookService {
     public Book findById(final Long id) {
         log.info("Trying to find an book by id " + id);
         return bookRepository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException("Book",id));
+                () -> new EntityNotFoundException("Book", id));
     }
 
     @Override
@@ -72,14 +71,14 @@ public class BookServiceImpl implements BookService {
     public Page<Book> findBooksByGenre(final String genre, final Pageable pageable) {
         log.info("Looking for a book by genre - " + genre);
         final Optional<Page<Book>> books = Optional.ofNullable(bookRepository.findAllByGenreLike(genre, pageable));
-        return books.orElseThrow(()-> new EntityNotFoundException("Book",genre));
+        return books.orElseThrow(() -> new EntityNotFoundException("Book", genre));
     }
 
     @Override
     public Page<Book> findBooksByTitle(final String title, final Pageable pageable) {
         log.info("Looking for a book by title - " + title);
         final Optional<Page<Book>> books = Optional.ofNullable(bookRepository.findBooksByTitle(title, pageable));
-        return books.orElseThrow(()-> new EntityNotFoundException("Book",title));
+        return books.orElseThrow(() -> new EntityNotFoundException("Book", title));
     }
 
     @Override
@@ -91,7 +90,7 @@ public class BookServiceImpl implements BookService {
         } else {
             books = Optional.ofNullable(bookRepository.findAllByCountBookGreaterThanEqual(count, pageable));
         }
-        return books.orElseThrow(()-> new EntityNotFoundException("Book",count.toString()));
+        return books.orElseThrow(() -> new EntityNotFoundException("Book", count.toString()));
     }
 
     @Override
@@ -101,7 +100,7 @@ public class BookServiceImpl implements BookService {
                 author.getFirstName(),
                 author.getLastName(),
                 pageable));
-        return books.orElseThrow(()-> new EntityNotFoundException(
+        return books.orElseThrow(() -> new EntityNotFoundException(
                 "Book",
                 author.getFirstName() + " " + author.getLastName()));
     }

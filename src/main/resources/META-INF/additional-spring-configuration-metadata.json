@@ -4,5 +4,10 @@
       "name": "lombok.anyConstructor.addConstructorProperties",
       "type": "java.lang.String",
       "description": "Description for lombok.anyConstructor.addConstructorProperties."
-  }
-] }
+    },
+    {
+      "name": "jwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jwt.secret."
+    }
+  ] }

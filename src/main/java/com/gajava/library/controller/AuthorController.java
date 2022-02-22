@@ -31,9 +31,9 @@ public class AuthorController {
         return new ResponseEntity<>(authorDto, HttpStatus.OK);
     }
 
-    //TODO massage delete complete
     @DeleteMapping(value = "/{id}/delete")
-    public void deleteAuthor(@PathVariable final Long id) {
+    public ResponseEntity<String> deleteAuthor(@PathVariable final Long id) {
         authorService.delete(id);
+        return new ResponseEntity<>("The author has been deleted",HttpStatus.OK);
     }
 }

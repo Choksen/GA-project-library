@@ -1,13 +1,16 @@
 package com.gajava.library.service;
 
 import com.gajava.library.exception.EntityNotFoundException;
+import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.exception.SaveEntityException;
+import com.gajava.library.model.Author;
 import com.gajava.library.model.Role;
 import com.gajava.library.model.User;
 import com.gajava.library.repository.RoleRepository;
 import com.gajava.library.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,8 +32,15 @@ public class UserService {
                 () -> new EntityNotFoundException("Role", "ROLE_USER"));
         user.setRole(userRole);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return Optional.of(userRepository.save(user)).orElseThrow(
-                () -> new SaveEntityException("User"));
+        User userCreated;
+        try {
+            userCreated =  Optional.of(userRepository.save(user)).orElseThrow(
+                    () -> new SaveEntityException("User"));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentsException("Such an user already exists");
+        }
+        log.info("User " + user.getLogin() + " was create");
+        return userCreated;
     }
 
     public User findByLogin(final String login) {

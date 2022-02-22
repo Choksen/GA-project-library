@@ -1,6 +1,6 @@
-/*
 package com.gajava.library.config;
 
+import com.gajava.library.config.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,19 +16,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtFilter jwtFilter;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/user/*").hasRole("USER")
+
+                .antMatchers(
+                        "/records/*",
+                        "/authors/*",
+                        "/books/*",
+                        "/readers",
+                        "/readers/*",
+                        "/records",
+                        "/records/*").hasRole("ADMIN")
+
+                .antMatchers("/books").hasAnyRole("USER","ADMIN")
+
                 .antMatchers("/register", "/auth").permitAll()
+
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
-*/

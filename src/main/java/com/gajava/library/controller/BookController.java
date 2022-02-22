@@ -40,18 +40,17 @@ public class BookController {
     }
 
     @DeleteMapping(value = "/{id}/delete")
-    public void delete(@PathVariable final Long id) {
+    public ResponseEntity<String> delete(@PathVariable final Long id) {
         bookService.delete(id);
+        return new ResponseEntity<>("The book has been deleted",HttpStatus.OK);
     }
 
-    //TODO findByYear?
     @GetMapping(value = "")
     public ResponseEntity<List<BookDto>> findBySomething(@RequestBody @Valid final FindBookByDto findBookByDto) {
         final Book bookParams = bookMapper.fromDto(findBookByDto);
         final Page<Book> books = bookManager.findBooksBySomething(
                 bookParams,
                 paginationMapper.fromDto(findBookByDto.getPagination()));
-        //final Integer countPages = books.getTotalPages(); Надо ли передавать на фронт количество страниц?
         final List<BookDto> booksDto = bookMapper.toDto(books);
         return new ResponseEntity<>(booksDto, HttpStatus.OK);
     }
