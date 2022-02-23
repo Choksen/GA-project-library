@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * the controller working with the readers
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "readers")
@@ -41,7 +44,7 @@ public class ReaderController {
     @DeleteMapping(value = "/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable final Long id) {
         readerService.delete(id);
-        return new ResponseEntity<>("The reader has been deleted",HttpStatus.OK);
+        return new ResponseEntity<>("The reader has been deleted", HttpStatus.OK);
     }
 
     @GetMapping

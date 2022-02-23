@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Author entity
+ */
 @Entity
 @Table(name = "author", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"first_name", "last_name"})})

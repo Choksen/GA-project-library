@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * the controller working with the authors
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authors")
@@ -34,6 +37,6 @@ public class AuthorController {
     @DeleteMapping(value = "/{id}/delete")
     public ResponseEntity<String> deleteAuthor(@PathVariable final Long id) {
         authorService.delete(id);
-        return new ResponseEntity<>("The author has been deleted",HttpStatus.OK);
+        return new ResponseEntity<>("The author has been deleted", HttpStatus.OK);
     }
 }

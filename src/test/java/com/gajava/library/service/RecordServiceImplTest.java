@@ -19,6 +19,9 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
+/**
+ * Test {@link RecordServiceImpl}
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RecordServiceImplTest {
 

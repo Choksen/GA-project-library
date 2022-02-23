@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Mapper from books
+ */
 @Mapper(componentModel = "spring")
 public interface BookMapper {
     @Mapping(target = "numberInstances", source = "book.countBook")
@@ -23,7 +26,7 @@ public interface BookMapper {
 
     List<BookDto> toDto(Page<Book> books);
 
-    @Mapping(target = "authors",expression = "java(authorToAuthorDto(findBookByDto.getAuthor()))")
+    @Mapping(target = "authors", expression = "java(authorToAuthorDto(findBookByDto.getAuthor()))")
     Book fromDto(FindBookByDto findBookByDto);
 
     default Set<Author> authorsToAuthorsDto(final Set<AuthorDto> authorsDto) {

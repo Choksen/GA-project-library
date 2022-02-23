@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
+/**
+ * Book Dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

@@ -24,6 +24,9 @@ import java.time.LocalDate;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test {@link RecordManagerImpl}
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class RecordManagerImplTest {
 

@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+/**
+ * Person entity with full name
+ */
 @Getter
 @Setter
 @AllArgsConstructor

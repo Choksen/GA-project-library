@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+/**
+ * Mapper from readers
+ */
 @Mapper(componentModel = "spring")
 public interface ReaderMapper {
 

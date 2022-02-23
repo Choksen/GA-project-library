@@ -4,12 +4,15 @@ import com.gajava.library.controller.dto.BookDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * Response Reader Dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

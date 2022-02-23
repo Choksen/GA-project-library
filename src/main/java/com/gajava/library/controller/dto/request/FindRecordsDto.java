@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * find record dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

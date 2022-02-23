@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * the controller working with the records
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "records")
@@ -42,7 +45,7 @@ public class RecordController {
     @DeleteMapping(value = "/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable final Long id) {
         recordService.delete(id);
-        return new ResponseEntity<>("The record has been deleted",HttpStatus.OK);
+        return new ResponseEntity<>("The record has been deleted", HttpStatus.OK);
     }
 
     @GetMapping

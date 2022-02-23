@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * Reader entity
+ */
 @Entity
 @Table(name = "reader")
 @Getter

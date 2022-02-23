@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * pagination dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

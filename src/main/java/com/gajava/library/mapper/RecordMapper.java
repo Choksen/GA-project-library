@@ -14,6 +14,9 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+/**
+ * Mapper from records
+ */
 @Mapper(componentModel = "spring")
 public interface RecordMapper {
 

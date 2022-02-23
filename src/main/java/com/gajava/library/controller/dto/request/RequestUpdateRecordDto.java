@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * request update record dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

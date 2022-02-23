@@ -20,6 +20,9 @@ import java.util.Set;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ *  Test {@link BookManagerImpl}
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class BookManagerImplTest {
 

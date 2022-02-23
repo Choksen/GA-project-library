@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Record entity
+ */
 @Entity
 @Table(name = "record")
 @Getter

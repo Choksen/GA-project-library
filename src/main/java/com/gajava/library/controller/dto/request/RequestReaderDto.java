@@ -8,6 +8,9 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * request reader dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

@@ -18,6 +18,9 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
+/**
+ * Test {@link ReaderServiceImpl}
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ReaderServiceImplTest {
 

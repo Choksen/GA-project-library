@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * the controller working with the books
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/books")
@@ -42,7 +45,7 @@ public class BookController {
     @DeleteMapping(value = "/{id}/delete")
     public ResponseEntity<String> delete(@PathVariable final Long id) {
         bookService.delete(id);
-        return new ResponseEntity<>("The book has been deleted",HttpStatus.OK);
+        return new ResponseEntity<>("The book has been deleted", HttpStatus.OK);
     }
 
     @GetMapping(value = "")

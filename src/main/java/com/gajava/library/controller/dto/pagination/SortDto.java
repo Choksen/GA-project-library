@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Sort.Direction;
 
+/**
+ * sort dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor

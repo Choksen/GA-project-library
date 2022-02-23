@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+/**
+ * Mapper from pagination
+ */
 @Mapper(componentModel = "spring")
 public interface PaginationMapper {
     @Mappings({

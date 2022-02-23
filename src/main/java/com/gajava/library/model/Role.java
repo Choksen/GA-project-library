@@ -9,6 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * Role entity
+ */
 @Entity
 @Table(name = "role")
 @Getter

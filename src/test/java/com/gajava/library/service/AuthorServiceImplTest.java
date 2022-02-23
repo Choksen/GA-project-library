@@ -20,6 +20,9 @@ import java.util.Optional;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test {@link AuthorServiceImpl}
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 public class AuthorServiceImplTest {
 

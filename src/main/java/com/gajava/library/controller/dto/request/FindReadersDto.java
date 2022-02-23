@@ -8,6 +8,9 @@ import lombok.Setter;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+/**
+ * find reader dto
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
