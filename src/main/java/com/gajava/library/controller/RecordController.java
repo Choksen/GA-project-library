@@ -1,6 +1,7 @@
 package com.gajava.library.controller;
 
 import com.gajava.library.controller.dto.request.FindRecordsDto;
+import com.gajava.library.controller.dto.request.RequestDefaultUpdateRecordDto;
 import com.gajava.library.controller.dto.request.RequestRecordDto;
 import com.gajava.library.controller.dto.request.RequestUpdateRecordDto;
 import com.gajava.library.controller.dto.response.ResponseRecordDto;
@@ -35,6 +36,13 @@ public class RecordController {
         final Record record = recordMapper.fromDto(requestRecordDto);
         final ResponseRecordDto recordCreated = recordMapper.toDto(recordManager.create(record));
         return new ResponseEntity<>(recordCreated, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/defaultUpdate")
+    public ResponseEntity<ResponseRecordDto> update(@RequestBody @Valid final RequestDefaultUpdateRecordDto requestRecordDto) {
+        final Record record = recordMapper.fromDto(requestRecordDto);
+        final ResponseRecordDto recordCreated = recordMapper.toDto(recordService.update(record));
+        return new ResponseEntity<>(recordCreated, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

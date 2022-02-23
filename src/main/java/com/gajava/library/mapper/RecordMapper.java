@@ -1,6 +1,7 @@
 package com.gajava.library.mapper;
 
 import com.gajava.library.controller.dto.request.FindRecordsDto;
+import com.gajava.library.controller.dto.request.RequestDefaultUpdateRecordDto;
 import com.gajava.library.controller.dto.request.RequestRecordDto;
 import com.gajava.library.controller.dto.request.RequestUpdateRecordDto;
 import com.gajava.library.controller.dto.response.ResponseRecordDto;
@@ -28,6 +29,7 @@ public interface RecordMapper {
     })
     ResponseRecordDto toDto(Record record);
 
+    Record fromDto(RequestDefaultUpdateRecordDto requestRecordDto);
 
     default Record fromDto(final RequestRecordDto recordDto) {
         final Book book = new Book();
@@ -60,4 +62,5 @@ public interface RecordMapper {
                 reader,
                 updateRecordDto.getComment());
     }
+
 }

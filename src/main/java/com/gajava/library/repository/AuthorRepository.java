@@ -4,7 +4,7 @@ import com.gajava.library.model.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * repository working with the author
+ * repository working with the authors
  */
 public interface AuthorRepository extends JpaRepository<Author, Long> {
     /**

@@ -19,6 +19,14 @@ public interface CrudService<Entity extends Base> {
     Entity save(Entity entity);
 
     /**
+     * update entity with id
+     *
+     * @param entity entity for update
+     * @return updated entity
+     */
+    Entity update(Entity entity);
+
+    /**
      * find entity by id
      *
      * @param id entity id

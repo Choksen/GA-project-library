@@ -33,7 +33,7 @@ public class Book extends Base {
     private String description;
 
     @NotNull
-    @Column(name = "number_instances", nullable = false) //TODO added min count = 0
+    @Column(name = "number_instances", nullable = false)
     private Integer countBook;
 
     @ManyToMany

@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User userCreated;
         try {
-            userCreated = Optional.ofNullable(userRepository.save(user)).orElseThrow(
+            userCreated = Optional.of(userRepository.save(user)).orElseThrow(
                     () -> new SaveEntityException("User"));
         } catch (DataIntegrityViolationException e) {
             throw new InvalidArgumentsException("Such an user already exists");

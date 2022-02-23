@@ -28,6 +28,13 @@ public class AuthorController {
         return new ResponseEntity<>(responseAuthorDto, HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/update")
+    public ResponseEntity<AuthorDto> updateAuthor(@RequestBody @Valid final AuthorDto authorDto) {
+        final Author author = authorMapper.fromDto(authorDto);
+        final AuthorDto responseAuthorDto = authorMapper.toDto(authorService.update(author));
+        return new ResponseEntity<>(responseAuthorDto, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<AuthorDto> findById(@PathVariable final Long id) {
         final AuthorDto authorDto = authorMapper.toDto(authorService.findById(id));

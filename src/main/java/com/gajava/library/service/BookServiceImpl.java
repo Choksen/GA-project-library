@@ -29,8 +29,25 @@ public class BookServiceImpl implements BookService {
             throw new InvalidArgumentsException("The book cannot be null");
         }
         log.info("Try to create book");
-        final Optional<Book> bookCreated = Optional.ofNullable(bookRepository.save(book));
+        final Optional<Book> bookCreated = Optional.of(bookRepository.save(book));
         return bookCreated.orElseThrow(() -> new SaveEntityException("Book"));
+    }
+
+    @Override
+    public Book update(final Book book) {
+        if (Objects.isNull(book)) {
+            throw new InvalidArgumentsException("The book cannot be null");
+        }
+        log.info("Try to update book by id " + book.getId());
+        if (Objects.isNull(book.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the book with a null id");
+        } else if (!bookRepository.existsById(book.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the book without an existing id");
+        }
+        final Book bookBeforeUpdate = findById(book.getId());
+        book.setAuthors(bookBeforeUpdate.getAuthors());
+        final Optional<Book> bookUpdated = Optional.of(bookRepository.save(book));
+        return bookUpdated.orElseThrow(() -> new SaveEntityException("Book"));
     }
 
     @Override

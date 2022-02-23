@@ -30,13 +30,35 @@ public class AuthorServiceImpl implements AuthorService {
         log.info("Try to create author " + author.getFirstName() + " " + author.getLastName());
         Author authorCreated;
         try {
-            authorCreated = Optional.ofNullable(
+            authorCreated = Optional.of(
                     authorRepository.save(author)).orElseThrow(() -> new SaveEntityException("Author"));
         } catch (DataIntegrityViolationException e) {
             throw new InvalidArgumentsException("Such an author already exists");
         }
         log.info("Author" + author.getFirstName() + " " + author.getLastName() + " was create");
         return authorCreated;
+    }
+
+    @Override
+    public Author update(final Author author) {
+        if (Objects.isNull(author)) {
+            throw new InvalidArgumentsException("The author cannot be null");
+        }
+        log.info("Try to update author " + author.getFirstName() + " " + author.getLastName());
+        if(Objects.isNull(author.getId())){
+            throw new InvalidArgumentsException("It is not possible to update the author with a null id");
+        } else if(!authorRepository.existsById(author.getId())){
+            throw new InvalidArgumentsException("It is not possible to update the author without an existing id");
+        }
+        Author authorUpdated;
+        try {
+            authorUpdated = Optional.of(
+                    authorRepository.save(author)).orElseThrow(() -> new SaveEntityException("Author"));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentsException("Such an author already exists");
+        }
+        log.info("Author" + author.getFirstName() + " " + author.getLastName() + " was update");
+        return authorUpdated;
     }
 
     @Override

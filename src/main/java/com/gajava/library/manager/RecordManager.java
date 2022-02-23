@@ -18,7 +18,7 @@ public interface RecordManager {
     Record create(Record record);
 
     /**
-     * update date return and comment
+     * update record date return and comment when reader return book
      *
      * @param record record entity
      * @return created record

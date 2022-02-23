@@ -3,12 +3,14 @@ package com.gajava.library.service;
 import com.gajava.library.exception.EntityNotFoundException;
 import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.exception.SaveEntityException;
+import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import com.gajava.library.model.Reader;
 import com.gajava.library.model.Record;
 import com.gajava.library.repository.RecordRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,8 +31,26 @@ public class RecordServiceImpl implements RecordService {
             throw new InvalidArgumentsException("The record cannot be null");
         }
         log.info("Try to save record");
-        final Optional<Record> recordCreated = Optional.ofNullable(recordRepository.save(record));
+        final Optional<Record> recordCreated = Optional.of(recordRepository.save(record));
         return recordCreated.orElseThrow(() -> new SaveEntityException("Record"));
+    }
+
+    @Override
+    public Record update(final Record record) {
+        if (Objects.isNull(record)) {
+            throw new InvalidArgumentsException("The record cannot be null");
+        }
+        log.info("Try to update record by id " + record.getId());
+        if (Objects.isNull(record.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the record with a null id");
+        } else if (!recordRepository.existsById(record.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the record without an existing id");
+        }
+        final Record recordBeforeUpdate = findById(record.getId());
+        record.setReader(recordBeforeUpdate.getReader());
+        record.setBook(recordBeforeUpdate.getBook());
+        final Optional<Record> recordUpdated = Optional.of(recordRepository.save(record));
+        return recordUpdated.orElseThrow(() -> new SaveEntityException("Reader"));
     }
 
     @Override
@@ -41,7 +61,6 @@ public class RecordServiceImpl implements RecordService {
         log.info("Trying to find a record by id " + id);
         return recordRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Record", id));
     }
-
 
     @Override
     public void delete(final Long id) {

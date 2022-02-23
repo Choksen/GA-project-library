@@ -91,7 +91,7 @@ public class BookServiceImplTest {
 
     @Test(expected = InvalidArgumentsException.class)
     public void updateCountBooks_IdOrNumberOfChangesNull() {
-        bookService.updateCountBooks(id, null); //TODO others???
+        bookService.updateCountBooks(id, null);
     }
 
     @Test

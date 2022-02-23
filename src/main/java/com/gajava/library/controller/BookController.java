@@ -2,6 +2,7 @@ package com.gajava.library.controller;
 
 import com.gajava.library.controller.dto.BookDto;
 import com.gajava.library.controller.dto.request.FindBookByDto;
+import com.gajava.library.controller.dto.request.RequestUpdateBookDto;
 import com.gajava.library.manager.BookManager;
 import com.gajava.library.mapper.BookMapper;
 import com.gajava.library.mapper.PaginationMapper;
@@ -34,6 +35,13 @@ public class BookController {
         final Book book = bookMapper.fromDto(bookDto);
         final BookDto responseBookDto = bookMapper.toDto(bookManager.create(book));
         return new ResponseEntity<>(responseBookDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<BookDto> updateBook(@RequestBody @Valid final RequestUpdateBookDto bookDto) {
+        final Book book = bookMapper.fromDto(bookDto);
+        final BookDto responseBookDto = bookMapper.toDto(bookService.update(book));
+        return new ResponseEntity<>(responseBookDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

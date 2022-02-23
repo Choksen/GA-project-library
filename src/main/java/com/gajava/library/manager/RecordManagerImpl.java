@@ -59,7 +59,8 @@ public class RecordManagerImpl implements RecordManager {
             throw new InvalidArgumentsException("Record parameters cannot be null");
         }
         final Book book = bookService.findById(recordParams.getBook().getId());
-        bookService.updateCountBooks(book.getId(), 1);
+        final Integer addBook = 1;
+        bookService.updateCountBooks(book.getId(), addBook);
 
         final Reader reader = readerService.findById(recordParams.getReader().getId());
 
@@ -74,7 +75,8 @@ public class RecordManagerImpl implements RecordManager {
         final long days = ChronoUnit.DAYS.between(
                 record.getDateExpectedReturn(),
                 record.getDateValidReturn());
-        final Integer rating = Math.toIntExact(5 + (days * -5));
+        final int ratingOneDay = 5;
+        final Integer rating = Math.toIntExact(ratingOneDay + (days * -ratingOneDay));
 
         readerService.updateBooksAndRating(reader.getId(), book.getId(), rating);
 

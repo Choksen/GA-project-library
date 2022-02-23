@@ -3,6 +3,8 @@ package com.gajava.library.mapper;
 import com.gajava.library.controller.dto.AuthorDto;
 import com.gajava.library.controller.dto.BookDto;
 import com.gajava.library.controller.dto.request.FindBookByDto;
+import com.gajava.library.controller.dto.request.RequestUpdateBookDto;
+import com.gajava.library.exception.InvalidArgumentsException;
 import com.gajava.library.model.Author;
 import com.gajava.library.model.Book;
 import org.mapstruct.Mapper;
@@ -21,20 +23,27 @@ public interface BookMapper {
     @Mapping(target = "numberInstances", source = "book.countBook")
     BookDto toDto(Book book);
 
+    List<BookDto> toDto(Page<Book> books);
+
     @Mapping(target = "countBook", source = "dto.numberInstances")
     Book fromDto(BookDto dto);
 
-    List<BookDto> toDto(Page<Book> books);
-
     @Mapping(target = "authors", expression = "java(authorToAuthorDto(findBookByDto.getAuthor()))")
     Book fromDto(FindBookByDto findBookByDto);
+
+    @Mapping(target = "countBook", source = "bookDto.numberInstances")
+    Book fromDto(RequestUpdateBookDto bookDto);
 
     default Set<Author> authorsToAuthorsDto(final Set<AuthorDto> authorsDto) {
         final Set<Author> authors = new HashSet<>();
         for (final AuthorDto authorDto : authorsDto) {
             final Author author = new Author();
-            author.setFirstName(authorDto.getFullName().split(" ")[0]);
-            author.setLastName(authorDto.getFullName().split(" ")[1]);
+            try {
+                author.setFirstName(authorDto.getFullName().split(" ")[0]);
+                author.setLastName(authorDto.getFullName().split(" ")[1]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new InvalidArgumentsException("invalid format for writing the full name of the author");
+            }
             authors.add(author);
         }
         return authors;
@@ -56,10 +65,15 @@ public interface BookMapper {
             return null;
         }
         final Author author = new Author();
-        author.setFirstName(authorDto.getFullName().split(" ")[0]);
-        author.setLastName(authorDto.getFullName().split(" ")[1]);
+        try {
+            author.setFirstName(authorDto.getFullName().split(" ")[0]);
+            author.setLastName(authorDto.getFullName().split(" ")[1]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new InvalidArgumentsException("invalid format for writing the full name of the author");
+        }
         final Set<Author> authors = new HashSet<>();
         authors.add(author);
         return authors;
     }
+
 }

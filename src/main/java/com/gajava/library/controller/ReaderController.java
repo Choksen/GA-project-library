@@ -2,6 +2,7 @@ package com.gajava.library.controller;
 
 import com.gajava.library.controller.dto.request.FindReadersDto;
 import com.gajava.library.controller.dto.request.RequestReaderDto;
+import com.gajava.library.controller.dto.request.RequestUpdateReaderDto;
 import com.gajava.library.controller.dto.response.ResponseReaderDto;
 import com.gajava.library.mapper.PaginationMapper;
 import com.gajava.library.mapper.ReaderMapper;
@@ -33,6 +34,14 @@ public class ReaderController {
         readerService.save(reader);
         final ResponseReaderDto readerDto = readerMapper.toDto(reader);
         return new ResponseEntity<>(readerDto, HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/update")
+    public ResponseEntity<ResponseReaderDto> update(@RequestBody @Valid final RequestUpdateReaderDto requestReaderDto) {
+        final Reader reader = readerMapper.fromDto(requestReaderDto);
+        readerService.update(reader);
+        final ResponseReaderDto readerDto = readerMapper.toDto(reader);
+        return new ResponseEntity<>(readerDto, HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

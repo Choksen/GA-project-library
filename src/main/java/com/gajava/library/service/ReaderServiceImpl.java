@@ -32,8 +32,31 @@ public class ReaderServiceImpl implements ReaderService {
         log.info("Try to save reader");
         reader.setNumberReader((long) (10000 + Math.random() * 89999));
         reader.setRating(50);
-        Optional<Reader> readerCreated = Optional.ofNullable(readerRepository.save(reader));
+        Optional<Reader> readerCreated;
+        try {
+            readerCreated = Optional.of(readerRepository.save(reader));
+        } catch (DataIntegrityViolationException e) {
+            throw new InvalidArgumentsException("This email is already busy");
+        }
         return readerCreated.orElseThrow(() -> new SaveEntityException("Reader"));
+    }
+
+    @Override
+    public Reader update(final Reader reader) {
+        if (Objects.isNull(reader)) {
+            throw new InvalidArgumentsException("The reader cannot be null");
+        }
+        log.info("Try to update reader by id " + reader.getId());
+        if (Objects.isNull(reader.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the reader with a null id");
+        } else if (!readerRepository.existsById(reader.getId())) {
+            throw new InvalidArgumentsException("It is not possible to update the reader without an existing id");
+        }
+        final Reader readerBeforeUpdate = findById(reader.getId());
+        reader.setBooks(readerBeforeUpdate.getBooks());
+        reader.setNumberReader(readerBeforeUpdate.getNumberReader());
+        final Optional<Reader> readerUpdated = Optional.of(readerRepository.save(reader));
+        return readerUpdated.orElseThrow(() -> new SaveEntityException("Reader"));
     }
 
     @Override
