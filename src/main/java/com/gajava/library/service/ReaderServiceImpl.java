@@ -32,8 +32,8 @@ public class ReaderServiceImpl implements ReaderService {
         log.info("Try to save reader");
         reader.setNumberReader((long) (10000 + Math.random() * 89999));
         reader.setRating(50);
-        Optional<Reader> reader1 = Optional.of(readerRepository.save(reader));
-        return reader1.orElseThrow(() -> new SaveEntityException("Reader"));
+        Optional<Reader> readerCreated = Optional.ofNullable(readerRepository.save(reader));
+        return readerCreated.orElseThrow(() -> new SaveEntityException("Reader"));
     }
 
     @Override

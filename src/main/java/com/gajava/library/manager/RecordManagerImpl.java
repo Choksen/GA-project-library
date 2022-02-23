@@ -63,7 +63,7 @@ public class RecordManagerImpl implements RecordManager {
 
         final Reader reader = readerService.findById(recordParams.getReader().getId());
 
-        final Record record = Optional.of(
+        final Record record = Optional.ofNullable(
                         recordService.findRecordByReaderIdAndBookId(reader.getId(), book.getId()))
                 .orElseThrow(() -> new EntityNotFoundException(
                         "There are no records with the id of the reader" + reader.getId()

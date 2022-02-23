@@ -29,7 +29,7 @@ public class BookServiceImpl implements BookService {
             throw new InvalidArgumentsException("The book cannot be null");
         }
         log.info("Try to create book");
-        final Optional<Book> bookCreated = Optional.of(bookRepository.save(book));
+        final Optional<Book> bookCreated = Optional.ofNullable(bookRepository.save(book));
         return bookCreated.orElseThrow(() -> new SaveEntityException("Book"));
     }
 

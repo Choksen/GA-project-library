@@ -30,7 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
         log.info("Try to create author " + author.getFirstName() + " " + author.getLastName());
         Author authorCreated;
         try {
-            authorCreated = Optional.of(
+            authorCreated = Optional.ofNullable(
                     authorRepository.save(author)).orElseThrow(() -> new SaveEntityException("Author"));
         } catch (DataIntegrityViolationException e) {
             throw new InvalidArgumentsException("Such an author already exists");

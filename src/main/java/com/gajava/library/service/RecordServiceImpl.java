@@ -29,7 +29,7 @@ public class RecordServiceImpl implements RecordService {
             throw new InvalidArgumentsException("The record cannot be null");
         }
         log.info("Try to save record");
-        final Optional<Record> recordCreated = Optional.of(recordRepository.save(record));
+        final Optional<Record> recordCreated = Optional.ofNullable(recordRepository.save(record));
         return recordCreated.orElseThrow(() -> new SaveEntityException("Record"));
     }
 
